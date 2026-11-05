@@ -1,1 +1,310 @@
-haloo saya naila mahasiswa al ma'soem
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bukti Belajar | Naila fauziah 262505010</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+:root{--pink:#DB2F87;--blue:#2F63F0;--navy:#1F2A5C;--soft:#5C6491;--mono:"JetBrains Mono",ui-monospace,Consolas,monospace}
+body{
+  font-family:"Space Grotesk",system-ui,sans-serif;color:var(--navy);
+  background:
+    linear-gradient(rgba(47,99,240,.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(47,99,240,.07) 1px,transparent 1px),
+    linear-gradient(160deg,#FFE0EE 0%,#F4E6FF 50%,#DCEBFF 100%);
+  background-size:28px 28px,28px 28px,auto;background-attachment:fixed;
+}
+
+/* Judul section */
+.hero{position:relative;overflow:hidden;text-align:center;padding:3.5rem 1rem 2.5rem}
+.eyebrow{letter-spacing:.18em;text-transform:uppercase;font-size:.8rem;font-weight:700;color:var(--pink)}
+.judul{font-size:clamp(2.8rem,9vw,4.8rem);font-weight:700;line-height:1.05;margin:.4rem 0 0;
+  background:linear-gradient(90deg,var(--pink),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+.subjudul{font-size:clamp(1rem,2.6vw,1.3rem);color:var(--soft);max-width:34rem;margin:1rem auto 0}
+.sim{position:absolute;font:700 clamp(2rem,8vw,5rem) var(--mono);color:var(--blue);opacity:.11;pointer-events:none;user-select:none}
+
+/* Kartu */
+.kartu{border:0;border-radius:1.25rem;background:rgba(255,255,255,.93);box-shadow:0 .75rem 2rem rgba(47,99,240,.16)}
+.lencana{flex:none;width:3rem;height:3rem;border-radius:.9rem;display:grid;place-items:center;color:#fff;font:700 1.05rem var(--mono);
+  background:linear-gradient(135deg,var(--pink),var(--blue))}
+.kartu h2{font-size:1.25rem;font-weight:700;margin:0}
+.kartu .ket{color:var(--soft);font-size:.92rem;margin:0}
+.form-label{font-weight:500;font-size:.9rem}
+.form-control{font-family:var(--mono);font-weight:500;border-color:#F0C4DA;border-radius:.65rem}
+.form-control:focus{border-color:var(--pink);box-shadow:0 0 0 .2rem rgba(219,47,135,.2)}
+.btn-pb{background:linear-gradient(135deg,var(--pink),var(--blue));border:0;color:#fff;font-weight:700;border-radius:.65rem}
+.btn-pb:hover,.btn-pb:focus{color:#fff;filter:brightness(1.1)}
+.btn-garis{border:1.5px solid var(--blue);color:var(--blue);font-weight:600;border-radius:.65rem;background:transparent}
+.btn-garis:hover{background:var(--blue);color:#fff}
+
+/* Biodata */
+.avatar{flex:none;width:5.5rem;height:5.5rem;border-radius:50%;display:grid;place-items:center;color:#fff;font:700 1.9rem var(--mono);
+  background:linear-gradient(135deg,var(--pink),var(--blue));box-shadow:0 .4rem 1rem rgba(219,47,135,.3)}
+.bio dt{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);font-weight:700;margin:0}
+.bio dd{font-weight:500;margin:0 0 .6rem;overflow-wrap:anywhere}
+.nama{font-size:clamp(1.4rem,4vw,1.9rem);font-weight:700}
+.chip{display:inline-block;padding:.25rem .75rem;margin:0 .35rem .35rem 0;border-radius:999px;font-size:.88rem;font-weight:500;color:var(--navy);
+  background:linear-gradient(135deg,rgba(219,47,135,.14),rgba(47,99,240,.16))}
+
+/* Hasil perhitungan */
+.hasil{border-radius:1rem;padding:1rem 1.25rem;background:linear-gradient(135deg,rgba(219,47,135,.09),rgba(47,99,240,.11))}
+.label-hasil{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--soft)}
+.rumus{font-family:var(--mono);font-size:.95rem;color:var(--soft);overflow-wrap:anywhere}
+.angka{font:700 clamp(2.8rem,10vw,3.8rem)/1.05 var(--mono);color:var(--blue);overflow-wrap:anywhere}
+.status{font:700 clamp(2.4rem,9vw,3.4rem)/1.05 var(--mono)}
+.ok{color:var(--blue)}
+.no{color:var(--pink)}
+.rinci{font-family:var(--mono);font-size:.9rem;overflow-wrap:anywhere}
+
+footer{text-align:center;color:var(--soft);font-size:.85rem;padding:2rem 1rem 2.5rem}
+
+/* Bintang */
+.star{position:fixed;pointer-events:none;z-index:2000;line-height:1;animation:pop .9s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes pop{
+  0%{transform:translate(-50%,-50%) scale(.3) rotate(0deg);opacity:1}
+  100%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1) rotate(var(--r));opacity:0}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <span class="sim" style="left:5%;top:12%" aria-hidden="true">mod</span>
+  <span class="sim" style="right:6%;top:8%" aria-hidden="true">&equiv;</span>
+  <span class="sim" style="left:12%;bottom:6%" aria-hidden="true">&sum;</span>
+  <span class="sim" style="right:10%;bottom:10%" aria-hidden="true">{ }</span>
+  <div class="position-relative">
+    <div class="eyebrow">Matematika Informatika</div>
+    <h1 class="judul">Bukti Belajar</h1>
+    <p class="subjudul">Perjalanan belajar Matematika Informatika bersama Pa Iin TA 20261</p>
+  </div>
+</header>
+
+<main class="container pb-2" style="max-width:62rem">
+
+  <!-- Biodata -->
+  <section class="card kartu mb-4" aria-labelledby="judulBio"><div class="card-body p-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 id="judulBio">Biodata</h2>
+      <button id="btnUbah" class="btn btn-garis btn-sm px-3" type="button">Ubah biodata</button>
+    </div>
+
+    <div id="tampilBio" class="d-flex flex-column flex-sm-row align-items-center align-items-sm-start gap-4">
+      <div class="avatar" id="avatar" aria-hidden="true"></div>
+      <dl class="bio flex-grow-1 mb-0 w-100">
+        <div class="nama mb-2" id="bNama"></div>
+        <div class="row">
+          <div class="col-6 col-md-4"><dt>NIM : 262505010</dt><dd id="bNim"></dd></div>
+          <div class="col-6 col-md-4"><dt>Program Studi: sistem informasi</dt><dd id="bProdi"></dd></div>
+          <div class="col-12 col-md-4"><dt>Fakultas: komputer</dt><dd id="bFakultas"></dd></div>
+        </div>
+        <dt>Hobi</dt><dd id="bHobi">Menggambar, menulis dan mendengarkan musik </dd>
+      </dl>
+    </div>
+
+    <form id="formBio" class="d-none" novalidate>
+      <div class="row g-3">
+        <div class="col-12 col-md-6"><label class="form-label" for="eNama">Nama</label><input id="eNama" class="form-control" autocomplete="off"></div>
+        <div class="col-12 col-md-6"><label class="form-label" for="eNim">NIM</label><input id="eNim" class="form-control" autocomplete="off"></div>
+        <div class="col-12 col-md-6"><label class="form-label" for="eProdi">Program Studi</label><input id="eProdi" class="form-control" autocomplete="off"></div>
+        <div class="col-12 col-md-6"><label class="form-label" for="eFakultas">Fakultas</label><input id="eFakultas" class="form-control" autocomplete="off"></div>
+        <div class="col-12"><label class="form-label" for="eHobi">Hobi (pisahkan dengan koma)</label><input id="eHobi" class="form-control" autocomplete="off"></div>
+      </div>
+      <div class="d-flex gap-2 mt-3">
+        <button class="btn btn-pb px-4" type="submit">Simpan</button>
+        <button id="btnBatal" class="btn btn-garis px-4" type="button">Batal</button>
+      </div>
+    </form>
+  </div></section>
+
+  <div class="row g-4">
+
+    <!-- Kalkulator 1: Modulo -->
+    <div class="col-12 col-lg-6">
+      <section class="card kartu h-100" aria-labelledby="judul1"><div class="card-body p-4">
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <div class="lencana" aria-hidden="true">mod</div>
+          <div><h2 id="judul1">Kalkulator Modulo</h2><p class="ket">Hitung sisa pembagian a mod b.</p></div>
+        </div>
+        <form id="f1" novalidate>
+          <div class="row g-3 mb-3">
+            <div class="col-6"><label class="form-label" for="a1">Bilangan a</label>
+              <input id="a1" class="form-control" inputmode="numeric" value="17" autocomplete="off"></div>
+            <div class="col-6"><label class="form-label" for="b1">Modulus b</label>
+              <input id="b1" class="form-control" inputmode="numeric" value="5" autocomplete="off"></div>
+          </div>
+          <button class="btn btn-pb w-100 py-2" type="submit">Hitung</button>
+        </form>
+        <div id="err1" class="alert alert-danger mt-3 mb-0 d-none" role="alert"></div>
+        <div id="box1" class="hasil mt-4" aria-live="polite">
+          <div class="label-hasil">Hasil</div>
+          <div class="rumus" id="pers1"></div>
+          <div class="angka" id="hasil1"></div>
+          <div class="rinci mt-1" id="rinci1"></div>
+        </div>
+      </div></section>
+    </div>
+
+    <!-- Kalkulator 2: Kongruensi -->
+    <div class="col-12 col-lg-6">
+      <section class="card kartu h-100" aria-labelledby="judul2"><div class="card-body p-4">
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <div class="lencana" aria-hidden="true">&equiv;</div>
+          <div><h2 id="judul2">Cek Kongruensi</h2><p class="ket">Periksa apakah a &equiv; c (mod m).</p></div>
+        </div>
+        <form id="f2" novalidate>
+          <div class="row g-3 mb-3">
+            <div class="col-4"><label class="form-label" for="a2">Bilangan a</label>
+              <input id="a2" class="form-control" inputmode="numeric" value="17" autocomplete="off"></div>
+            <div class="col-4"><label class="form-label" for="c2">Bilangan c</label>
+              <input id="c2" class="form-control" inputmode="numeric" value="22" autocomplete="off"></div>
+            <div class="col-4"><label class="form-label" for="m2">Modulus m</label>
+              <input id="m2" class="form-control" inputmode="numeric" value="5" autocomplete="off"></div>
+          </div>
+          <button class="btn btn-pb w-100 py-2" type="submit">Cek kongruensi</button>
+        </form>
+        <div id="err2" class="alert alert-danger mt-3 mb-0 d-none" role="alert"></div>
+        <div id="box2" class="hasil mt-4" aria-live="polite">
+          <div class="label-hasil">Hasil</div>
+          <div class="rumus" id="pers2"></div>
+          <div class="status" id="status2"></div>
+          <div class="rinci mt-1" id="rinci2"></div>
+          <div class="rinci mt-1" id="selisih2"></div>
+        </div>
+      </div></section>
+    </div>
+
+  </div>
+</main>
+
+<footer>Matematika Informatika &middot; TA 20261</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const mod = (x, n) => ((x % n) + n) % n;
+
+/* ---------- Biodata (bisa diubah, tersimpan di browser) ---------- */
+const DEF = {nama:"Nama Lengkap", nim:"12345678", prodi:"Sistem Informasi", fakultas:"Ilmu Komputer", hobi:"Membaca, Coding, Musik"};
+function muat(){
+  try { return Object.assign({}, DEF, JSON.parse(localStorage.getItem("biodata") || "{}")); }
+  catch (e) { return Object.assign({}, DEF); }
+}
+function simpanBio(){ try { localStorage.setItem("biodata", JSON.stringify(bio)); } catch (e) {} }
+let bio = muat();
+
+function tampilBio(){
+  $("bNama").textContent = bio.nama;
+  $("bNim").textContent = bio.nim;
+  $("bProdi").textContent = bio.prodi;
+  $("bFakultas").textContent = bio.fakultas;
+  $("avatar").textContent = bio.nama.split(/\s+/).filter(Boolean).slice(0, 2).map(k => k[0].toUpperCase()).join("") || "?";
+  $("bHobi").innerHTML = "";
+  bio.hobi.split(",").map(h => h.trim()).filter(Boolean).forEach(h => {
+    const c = document.createElement("span");
+    c.className = "chip"; c.textContent = h;
+    $("bHobi").appendChild(c);
+  });
+}
+function modeUbah(aktif){
+  $("tampilBio").classList.toggle("d-none", aktif);
+  $("formBio").classList.toggle("d-none", !aktif);
+  $("btnUbah").classList.toggle("d-none", aktif);
+  if (aktif){
+    $("eNama").value = bio.nama; $("eNim").value = bio.nim; $("eProdi").value = bio.prodi;
+    $("eFakultas").value = bio.fakultas; $("eHobi").value = bio.hobi;
+    $("eNama").focus();
+  }
+}
+$("btnUbah").addEventListener("click", () => modeUbah(true));
+$("btnBatal").addEventListener("click", () => modeUbah(false));
+$("formBio").addEventListener("submit", e => {
+  e.preventDefault();
+  bio = {
+    nama: $("eNama").value.trim() || DEF.nama, nim: $("eNim").value.trim() || DEF.nim,
+    prodi: $("eProdi").value.trim() || DEF.prodi, fakultas: $("eFakultas").value.trim() || DEF.fakultas,
+    hobi: $("eHobi").value.trim() || DEF.hobi
+  };
+  simpanBio(); tampilBio(); modeUbah(false);
+});
+tampilBio();
+
+/* ---------- Kalkulator ---------- */
+function bil(id, nama){
+  const t = $(id).value.trim();
+  if (!/^[+-]?\d+$/.test(t)) throw new Error(nama + " harus berupa bilangan bulat.");
+  return BigInt(t);
+}
+function modulus(id, nama){
+  const m = bil(id, nama);
+  if (m <= 0n) throw new Error(nama + " harus lebih dari 0.");
+  return m;
+}
+function galat(n, pesan){
+  const e = $("err" + n);
+  if (pesan){ e.textContent = pesan; e.classList.remove("d-none"); $("box" + n).classList.add("d-none"); }
+  else { e.classList.add("d-none"); $("box" + n).classList.remove("d-none"); }
+}
+
+// Kalkulator 1: a mod b
+function hitungModulo(){
+  try {
+    const a = bil("a1", "Bilangan a"), b = modulus("b1", "Modulus b");
+    const r = mod(a, b), q = (a - r) / b;
+    galat(1);
+    $("pers1").textContent = a + " mod " + b;
+    $("hasil1").textContent = r.toString();
+    $("rinci1").textContent = a + " = " + q + " \u00D7 " + b + " + " + r;
+  } catch (e) { galat(1, e.message); }
+}
+
+// Kalkulator 2: a \u2261 c (mod m)
+function cekKongruensi(){
+  try {
+    const a = bil("a2", "Bilangan a"), c = bil("c2", "Bilangan c"), m = modulus("m2", "Modulus m");
+    const ra = mod(a, m), rc = mod(c, m), d = a - c, benar = ra === rc;
+    galat(2);
+    $("pers2").textContent = a + " \u2261 " + c + " (mod " + m + ")";
+    $("status2").textContent = benar ? "Benar" : "Salah";
+    $("status2").className = "status " + (benar ? "ok" : "no");
+    $("rinci2").textContent = a + " mod " + m + " = " + ra + ",  " + c + " mod " + m + " = " + rc;
+    $("selisih2").textContent = benar
+      ? a + " \u2212 " + c + " = " + d + " = " + (d / m) + " \u00D7 " + m + " (habis dibagi " + m + ")"
+      : a + " \u2212 " + c + " = " + d + " (tidak habis dibagi " + m + ")";
+  } catch (e) { galat(2, e.message); }
+}
+
+$("f1").addEventListener("submit", e => { e.preventDefault(); hitungModulo(); });
+$("f2").addEventListener("submit", e => { e.preventDefault(); cekKongruensi(); });
+hitungModulo();
+cekKongruensi();
+
+/* ---------- Bintang muncul saat diklik atau disentuh ---------- */
+const WARNA = ["#FF6FB1", "#5B8DFF", "#FFB3D6", "#9CC0FF"];
+const BENTUK = ["\u2605", "\u2726", "\u2606"];
+const diam = window.matchMedia("(prefers-reduced-motion: reduce)");
+document.addEventListener("pointerdown", e => {
+  if (diam.matches) return;
+  for (let i = 0; i < 10; i++){
+    const s = document.createElement("span");
+    const sudut = Math.random() * 2 * Math.PI, jarak = 40 + Math.random() * 70;
+    s.className = "star";
+    s.textContent = BENTUK[i % BENTUK.length];
+    s.style.left = e.clientX + "px";
+    s.style.top = e.clientY + "px";
+    s.style.fontSize = (12 + Math.random() * 16) + "px";
+    s.style.color = WARNA[Math.floor(Math.random() * WARNA.length)];
+    s.style.setProperty("--dx", Math.round(Math.cos(sudut) * jarak) + "px");
+    s.style.setProperty("--dy", Math.round(Math.sin(sudut) * jarak) + "px");
+    s.style.setProperty("--r", Math.round(Math.random() * 240 - 120) + "deg");
+    s.addEventListener("animationend", () => s.remove());
+    document.body.appendChild(s);
+  }
+});
+</script>
+</body>
+</html>
