@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bukti Belajar | Matematika Informatika</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+:root{--moss:#8A9A5B;--moss-dk:#6E7D43;--rosy:#2E7D86;--rosy-dk:#004953;--ink:#0F2F32;--soft:#56675F;--garis:#C8D9D0;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --latar:linear-gradient(rgba(138,154,91,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(138,154,91,.1) 1px,transparent 1px),linear-gradient(160deg,#E4F0EE 0%,#EDF1E1 52%,#DCE6C8 100%)}
+body{font-family:"Space Grotesk",system-ui,sans-serif;color:var(--ink);background:var(--latar);background-size:28px 28px,28px 28px,auto;background-attachment:fixed}
+.grad{background:linear-gradient(90deg,var(--rosy-dk),var(--moss-dk));-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{letter-spacing:.18em;text-transform:uppercase;font-size:.8rem;font-weight:700;color:var(--rosy-dk)}
+.sim{position:absolute;font:700 clamp(2rem,8vw,5rem) var(--mono);color:var(--moss);opacity:.14;pointer-events:none;user-select:none}
+
+/* ---------- Menu ---------- */
+.menu{position:sticky;top:0;z-index:900;display:flex;gap:.4rem;overflow-x:auto;padding:calc(.6rem + env(safe-area-inset-top,0px)) 1rem .6rem;
+  background:rgba(228,240,238,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--garis)}
+.menu a{white-space:nowrap;padding:.4rem .9rem;border-radius:999px;color:var(--ink);text-decoration:none;font-weight:500;font-size:.9rem}
+.menu a:hover{background:rgba(138,154,91,.18)}
+.menu a.aktif{background:linear-gradient(135deg,var(--rosy-dk),var(--moss-dk));color:#fff}
+
+/* ---------- Halaman 1: nama + sapaan ---------- */
+.sec-nama{position:relative;overflow:hidden;min-height:85vh;min-height:85svh;display:flex;align-items:center;justify-content:center;padding:2rem 1rem;text-align:center}
+.isi-nama{position:relative;width:100%;max-width:26rem}
+.judul-sambut{font-size:clamp(2rem,7vw,2.8rem);font-weight:700;line-height:1.1;margin:.9rem 0 .4rem}
+.teks-sambut{color:var(--soft);margin-bottom:1.25rem}
+
+/* ---------- Halaman 2 & 3 ---------- */
+.hal{max-width:40rem;margin:0 auto;padding:1.25rem 1rem 3rem}
+.hal-lebar{max-width:46rem;margin:0 auto;padding:2rem 1rem 3rem}
+.sec-bukti{max-width:62rem;margin:0 auto;padding:3.5rem 1rem 3rem}
+.judul-besar{font-size:clamp(3.2rem,13vw,6.2rem);font-weight:700;line-height:1;margin:.5rem 0 0;text-align:center}
+.subjudul{font-size:clamp(1rem,2.6vw,1.3rem);color:var(--soft);max-width:34rem;margin:1rem auto 2.5rem;text-align:center}
+.menu-kartu{display:block;height:100%;padding:1.5rem;border-radius:1.25rem;background:rgba(255,255,255,.93);color:inherit;text-decoration:none;
+  box-shadow:0 .75rem 2rem rgba(110,125,67,.18);transition:transform .2s,box-shadow .2s}
+.menu-kartu:hover,.menu-kartu:focus-visible{transform:translateY(-5px);box-shadow:0 1.1rem 2.4rem rgba(0,73,83,.28);color:inherit}
+.menu-kartu h3{font-size:1.2rem;font-weight:700;margin:0 0 .3rem}
+.menu-kartu p{color:var(--soft);font-size:.93rem;margin:0 0 .9rem}
+.buka{font-weight:700;color:var(--rosy-dk);font-size:.92rem}
+.kembali{display:inline-block;margin-bottom:1rem;color:var(--rosy-dk);font-weight:600;text-decoration:none;font-size:.92rem}
+.kembali:hover{text-decoration:underline}
+.judul-hal{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem}
+.judul-hal h1{font-size:clamp(1.6rem,6vw,2.2rem);font-weight:700;margin:0;line-height:1.1}
+.judul-hal p{margin:.2rem 0 0;color:var(--soft);font-size:.95rem}
+
+/* ---------- Kartu & form ---------- */
+.kartu{border:0;border-radius:1.25rem;background:rgba(255,255,255,.93);box-shadow:0 .75rem 2rem rgba(110,125,67,.18)}
+.lencana{flex:none;width:3rem;height:3rem;border-radius:.9rem;display:grid;place-items:center;color:#fff;font:700 1rem var(--mono);
+  background:linear-gradient(135deg,var(--rosy-dk),var(--moss-dk))}
+.lencana.lg{width:3.6rem;height:3.6rem;font-size:1.1rem}
+.kartu h2{font-size:1.25rem;font-weight:700;margin:0}
+.form-label{font-weight:500;font-size:.9rem}
+.form-control,.form-select{font-family:var(--mono);font-weight:500;border-color:var(--garis);border-radius:.65rem}
+.form-control:focus,.form-select:focus{border-color:var(--moss-dk);box-shadow:0 0 0 .2rem rgba(138,154,91,.3)}
+.form-range::-webkit-slider-thumb{background:var(--rosy-dk)}
+.form-range::-moz-range-thumb{background:var(--rosy-dk)}
+.btn-pb{background:linear-gradient(135deg,var(--rosy-dk),var(--moss-dk));border:0;color:#fff;font-weight:700;border-radius:.65rem}
+.btn-pb:hover,.btn-pb:focus{color:#fff;filter:brightness(1.1)}
+.btn-garis{border:1.5px solid var(--moss-dk);color:var(--moss-dk);font-weight:600;border-radius:.65rem;background:transparent}
+.btn-garis:hover{background:var(--moss-dk);color:#fff}
+
+/* ---------- Biodata ---------- */
+.avatar{flex:none;width:5.5rem;height:5.5rem;border-radius:50%;overflow:hidden;display:grid;place-items:center;color:#fff;font:700 1.9rem var(--mono);
+  background:linear-gradient(135deg,var(--rosy-dk),var(--moss-dk));box-shadow:0 .4rem 1rem rgba(0,73,83,.3)}
+.avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.bio dt{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);font-weight:700;margin:0}
+.bio dd{font-weight:500;margin:0 0 .6rem;overflow-wrap:anywhere}
+.nama{font-size:clamp(1.4rem,4vw,1.9rem);font-weight:700}
+.chip{display:inline-block;padding:.25rem .75rem;margin:0 .35rem .35rem 0;border-radius:999px;font-size:.88rem;font-weight:500;
+  background:linear-gradient(135deg,rgba(0,73,83,.18),rgba(138,154,91,.28))}
+
+/* ---------- Hasil ---------- */
+.hasil{border-radius:1rem;padding:1rem 1.25rem;background:linear-gradient(135deg,rgba(0,73,83,.12),rgba(138,154,91,.18))}
+.label-hasil{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--soft)}
+.rumus{font-family:var(--mono);font-size:.95rem;color:var(--soft);overflow-wrap:anywhere}
+.angka{font:700 clamp(2.8rem,10vw,3.8rem)/1.05 var(--mono);color:var(--moss-dk);overflow-wrap:anywhere}
+.angka.panjang{font-size:1.35rem;line-height:1.3}
+.status{font:700 clamp(2rem,8vw,3rem)/1.1 var(--mono)}
+.ok{color:var(--moss-dk)}
+.no{color:var(--rosy-dk)}
+.rinci{font-family:var(--mono);font-size:.88rem;overflow-wrap:anywhere}
+.rinci li{margin-bottom:.3rem}
+.baris{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.65rem 0;border-bottom:1px dashed var(--garis);cursor:pointer}
+.baris:last-child{border-bottom:0}
+.baris b{font:700 1.15rem var(--mono);color:var(--moss-dk);text-align:right;overflow-wrap:anywhere}
+.jam-mod svg{width:min(100%,13rem);display:block;margin:.5rem auto 0}
+.jam-mod .cincin{fill:none;stroke:var(--garis);stroke-width:1.5}
+.jam-mod .tk{fill:var(--soft)}
+.jam-mod text{font:600 10px var(--mono);fill:var(--soft);text-anchor:middle;dominant-baseline:central}
+.jam-mod .hit{fill:var(--rosy-dk);font-size:13px}
+.jam-mod .tg{stroke:var(--rosy-dk);stroke-width:2.5;stroke-linecap:round}
+.jam-mod .dt{fill:var(--rosy-dk)}
+footer{text-align:center;color:var(--soft);font-size:.85rem;padding:0 1rem 7rem}
+
+/* ---------- Maskot Sunny ---------- */
+.mimo{position:fixed;right:.75rem;bottom:calc(.75rem + env(safe-area-inset-bottom,0px));z-index:1000;display:flex;flex-direction:column;align-items:flex-end;pointer-events:none}
+.mimo>*{pointer-events:auto}
+body.di-hero .mimo{display:none}
+.bubble{position:relative;max-width:min(17rem,68vw);min-height:2.6rem;background:#fff;border-radius:1rem;padding:.55rem .95rem;font-weight:500;font-size:.92rem;
+  box-shadow:0 .4rem 1rem rgba(110,125,67,.22);margin-bottom:.8rem;opacity:0;transform:translateY(6px);transition:opacity .25s,transform .25s;pointer-events:none}
+.bubble.tampil{opacity:1;transform:none}
+.bubble::after{content:"";position:absolute;right:2.2rem;bottom:-.45rem;width:.9rem;height:.9rem;background:#fff;transform:rotate(45deg);border-radius:0 0 .2rem 0}
+.bubble.tengah{max-width:min(21rem,90vw);margin:0 auto .9rem}
+.bubble.tengah::after{right:auto;left:50%;margin-left:-.45rem}
+.maskot{background:none;border:0;padding:0;width:5.5rem;cursor:pointer;display:block;-webkit-tap-highlight-color:transparent}
+.maskot.besar{width:min(55vw,12rem);margin:0 auto}
+.maskot svg{width:100%;height:auto;overflow:visible;filter:drop-shadow(0 .4rem .5rem rgba(15,47,50,.22))}
+.badan{animation:melayang 3.2s ease-in-out infinite}
+@keyframes melayang{50%{transform:translateY(-5px)}}
+.mata{transform-box:fill-box;transform-origin:center;animation:kedip 4.5s infinite}
+@keyframes kedip{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.08)}}
+.ekor{transform-box:fill-box;transform-origin:50% 0;animation:ayun 3s ease-in-out infinite}
+.ekor.kanan{animation-delay:-1.5s}
+@keyframes ayun{0%,100%{transform:rotate(4deg)}50%{transform:rotate(-4deg)}}
+.lambai{transform-box:fill-box;transform-origin:40% 95%;animation:lambai 1.6s ease-in-out infinite}
+@keyframes lambai{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(14deg)}}
+.maskot.loncat .badan{animation:loncat .5s ease-out}
+@keyframes loncat{0%{transform:translateY(0)}40%{transform:translateY(-20px) scale(1.04)}100%{transform:translateY(0)}}
+.m-senang,.m-sedih,.keringat{display:none}
+.maskot.senang .m-normal,.maskot.sedih .m-normal{display:none}
+.maskot.senang .m-senang,.maskot.sedih .m-sedih,.maskot.sedih .keringat{display:inline}
+@media (prefers-reduced-motion:reduce){.badan,.mata,.ekor,.lambai{animation:none}.menu-kartu{transition:none}}
+
+/* ---------- Bintang ---------- */
+.star{position:fixed;pointer-events:none;z-index:2000;line-height:1;animation:pop .9s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes pop{
+  0%{transform:translate(-50%,-50%) scale(.3) rotate(0deg);opacity:1}
+  100%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1) rotate(var(--r));opacity:0}
+}
+</style>
+</head>
+<body class="di-hero">
+
+<nav class="menu d-none" id="menu" aria-label="Navigasi utama"></nav>
+
+<!-- ================= HALAMAN 1: BERANDA (input nama + sapaan Sunny) ================= -->
+<section class="halaman" data-halaman="">
+  <div class="sec-nama">
+    <span class="sim" style="left:6%;top:12%" aria-hidden="true">mod</span>
+    <span class="sim" style="right:7%;top:9%" aria-hidden="true">&equiv;</span>
+    <span class="sim" style="left:10%;bottom:8%" aria-hidden="true">&sum;</span>
+    <span class="sim" style="right:9%;bottom:11%" aria-hidden="true">{ }</span>
+    <div class="isi-nama">
+      <div class="eyebrow">Matematika Informatika &middot; TA 20261</div>
+      <div class="bubble tengah mt-3" id="bubHero" role="status" aria-live="polite"></div>
+      <button class="maskot besar" id="mimoHero" data-mimo type="button" aria-label="Sunny, maskot Bukti Belajar. Klik untuk menyapa."></button>
+      <h1 class="judul-sambut grad">Selamat datang!</h1>
+      <p class="teks-sambut">Isi namamu dulu supaya Sunny bisa menyapamu.</p>
+      <form id="formNama" novalidate>
+        <label class="form-label" for="nama0">Siapa namamu?</label>
+        <input id="nama0" class="form-control text-center mb-2" maxlength="40" placeholder="Ketik namamu di sini" autocomplete="off">
+        <div id="errNama" class="text-danger small mb-2 d-none" role="alert">Nama belum diisi.</div>
+        <button class="btn btn-pb w-100 py-2" type="submit">Mulai</button>
+      </form>
+      <a id="btnLanjut" class="btn btn-garis w-100 py-2 mt-2 d-none" href="#biodata">Lanjut ke biodata &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HALAMAN 2: BIODATA ================= -->
+<section class="halaman d-none" data-halaman="biodata"><div class="hal-lebar">
+  <div class="eyebrow mb-1">Langkah 2</div>
+  <div class="card kartu"><div class="card-body p-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h1 class="h4 fw-bold m-0" id="judulBio">Biodata singkat</h1>
+      <button id="btnUbah" class="btn btn-garis btn-sm px-3 d-none" type="button">Ubah profil</button>
+    </div>
+
+    <div id="tampilBio" class="d-none">
+      <div class="d-flex flex-column flex-sm-row align-items-center align-items-sm-start gap-4">
+        <div class="avatar" id="avatar" aria-hidden="true"></div>
+        <dl class="bio flex-grow-1 mb-0 w-100">
+          <div class="nama mb-2" id="bNama"></div>
+          <div class="row">
+            <div class="col-6 col-md-4"><dt>NIM</dt><dd id="bNim"></dd></div>
+            <div class="col-6 col-md-4"><dt>Program Studi</dt><dd id="bProdi"></dd></div>
+            <div class="col-12 col-md-4"><dt>Fakultas</dt><dd id="bFakultas"></dd></div>
+          </div>
+          <dt>Hobi</dt><dd id="bHobi"></dd>
+        </dl>
+      </div>
+      <a class="btn btn-pb w-100 py-2 mt-3" href="#bukti">Lanjut ke Bukti Belajar &rarr;</a>
+    </div>
+
+    <form id="formBio" novalidate>
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <div class="avatar" id="fotoPrev" aria-hidden="true"></div>
+        <div class="flex-grow-1">
+          <label class="form-label" for="eFoto">Foto profil</label>
+          <input id="eFoto" class="form-control" type="file" accept="image/*">
+          <div class="d-flex align-items-center gap-2 mt-1">
+            <button id="btnHapusFoto" class="btn btn-link btn-sm p-0" type="button">Hapus foto</button>
+            <span id="errFoto" class="text-danger small d-none" role="alert"></span>
+          </div>
+        </div>
+      </div>
+      <div class="row g-3">
+        <div class="col-12 col-md-6"><label class="form-label" for="eNama">Nama</label><input id="eNama" class="form-control" maxlength="40" autocomplete="off"></div>
+        <div class="col-12 col-md-6"><label class="form-label" for="eNim">NIM</label><input id="eNim" class="form-control" maxlength="20" autocomplete="off"></div>
+        <div class="col-12 col-md-6"><label class="form-label" for="eProdi">Program Studi</label><input id="eProdi" class="form-control" maxlength="50" autocomplete="off"></div>
+        <div class="col-12 col-md-6"><label class="form-label" for="eFakultas">Fakultas</label><input id="eFakultas" class="form-control" maxlength="50" autocomplete="off"></div>
+        <div class="col-12"><label class="form-label" for="eHobi">Hobi (pisahkan dengan koma)</label><input id="eHobi" class="form-control" maxlength="120" autocomplete="off"></div>
+      </div>
+      <div class="d-flex gap-2 mt-3">
+        <button class="btn btn-pb px-4" type="submit">Simpan profil</button>
+        <button id="btnBatal" class="btn btn-garis px-4 d-none" type="button">Batal</button>
+      </div>
+    </form>
+  </div></div>
+</div></section>
+
+<!-- ================= HALAMAN 3: BUKTI BELAJAR (berisi semua kalkulator) ================= -->
+<section class="halaman d-none" data-halaman="bukti"><div class="sec-bukti">
+  <div class="text-center eyebrow">Langkah 3</div>
+  <h1 class="judul-besar grad">Bukti Belajar</h1>
+  <p class="subjudul">Perjalanan belajar matematika informatika bersama Pa Iin TA 20261</p>
+  <div class="row g-4" id="daftar"></div>
+</div></section>
+
+<!-- ================= KALKULATOR 1: MODULO ================= -->
+<section class="halaman d-none" data-halaman="modulo"><div class="hal">
+  <a class="kembali" href="#bukti">&larr; Kembali ke Bukti Belajar</a>
+  <div class="judul-hal"><div class="lencana lg" aria-hidden="true">mod</div>
+    <div><h1 class="grad">Kalkulator Modulo</h1><p>Hitung sisa pembagian a mod m.</p></div></div>
+  <div class="card kartu"><div class="card-body p-4">
+    <form id="f1" novalidate>
+      <div class="row g-3 mb-3">
+        <div class="col-6"><label class="form-label" for="a1">Bilangan a</label><input id="a1" class="form-control" inputmode="numeric" value="17" autocomplete="off"></div>
+        <div class="col-6"><label class="form-label" for="m1">Modulus m</label><input id="m1" class="form-control" inputmode="numeric" value="5" autocomplete="off"></div>
+      </div>
+      <button class="btn btn-pb w-100 py-2" type="submit">Hitung</button>
+    </form>
+    <div id="err1" class="alert alert-danger mt-3 mb-0 d-none" role="alert"></div>
+    <div id="box1" class="hasil mt-4" aria-live="polite">
+      <div class="label-hasil">Hasil</div>
+      <div class="rumus" id="pers1"></div>
+      <div class="angka" id="hasil1"></div>
+      <div class="label-hasil mt-3">Proses perhitungan</div>
+      <ol class="rinci ps-3 mb-0 mt-1" id="proses1"></ol>
+      <div class="jam-mod" id="jam1"></div>
+    </div>
+  </div></div>
+</div></section>
+
+<!-- ================= KALKULATOR 2: KONGRUENSI ================= -->
+<section class="halaman d-none" data-halaman="kongruensi"><div class="hal">
+  <a class="kembali" href="#bukti">&larr; Kembali ke Bukti Belajar</a>
+  <div class="judul-hal"><div class="lencana lg" aria-hidden="true">&equiv;</div>
+    <div><h1 class="grad">Kalkulator Kongruensi</h1><p>Periksa apakah a kongruen dengan b modulo m.</p></div></div>
+  <div class="card kartu"><div class="card-body p-4">
+    <form id="f2" novalidate>
+      <div class="row g-3 mb-3">
+        <div class="col-4"><label class="form-label" for="a2">Bilangan a</label><input id="a2" class="form-control" inputmode="numeric" value="17" autocomplete="off"></div>
+        <div class="col-4"><label class="form-label" for="b2">Bilangan b</label><input id="b2" class="form-control" inputmode="numeric" value="22" autocomplete="off"></div>
+        <div class="col-4"><label class="form-label" for="m2">Modulus m</label><input id="m2" class="form-control" inputmode="numeric" value="5" autocomplete="off"></div>
+      </div>
+      <button class="btn btn-pb w-100 py-2" type="submit">Periksa Kongruensi</button>
+    </form>
+    <div id="err2" class="alert alert-danger mt-3 mb-0 d-none" role="alert"></div>
+    <div id="box2" class="hasil mt-4" aria-live="polite">
+      <div class="label-hasil">Hasil</div>
+      <div class="rumus" id="pers2"></div>
+      <div class="status" id="status2"></div>
+      <div class="rinci mt-1" id="kalimat2"></div>
+      <div class="label-hasil mt-3">Proses pengecekan</div>
+      <ol class="rinci ps-3 mb-0 mt-1" id="proses2"></ol>
+    </div>
+  </div></div>
+</div></section>
+
+<!-- ================= KALKULATOR 3: SISTEM BILANGAN ================= -->
+<section class="halaman d-none" data-halaman="bilangan"><div class="hal">
+  <a class="kembali" href="#bukti">&larr; Kembali ke Bukti Belajar</a>
+  <div class="judul-hal"><div class="lencana lg" aria-hidden="true">bin</div>
+    <div><h1 class="grad">Kalkulator Sistem Bilangan</h1><p>Ubah antara biner, oktal, desimal, dan heksadesimal.</p></div></div>
+  <div class="card kartu"><div class="card-body p-4">
+    <form id="f3" novalidate>
+      <div class="row g-3 mb-3">
+        <div class="col-7"><label class="form-label" for="nilai3">Bilangan</label><input id="nilai3" class="form-control" value="255" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+        <div class="col-5"><label class="form-label" for="dari3">Basis asal</label>
+          <select id="dari3" class="form-select"><option value="2">Biner (2)</option><option value="8">Oktal (8)</option><option value="10" selected>Desimal (10)</option><option value="16">Heksa (16)</option></select></div>
+      </div>
+      <button class="btn btn-pb w-100 py-2" type="submit">Konversi</button>
+    </form>
+    <div id="err3" class="alert alert-danger mt-3 mb-0 d-none" role="alert"></div>
+    <div id="box3" class="hasil mt-4" aria-live="polite">
+      <div class="label-hasil mb-1">Hasil konversi (ketuk baris untuk menyalin)</div>
+      <div id="baris3"></div>
+      <label class="form-label mt-3" for="ke3">Langkah pembagian ke basis</label>
+      <select id="ke3" class="form-select"><option value="2">Biner (2)</option><option value="8">Oktal (8)</option><option value="16">Heksa (16)</option></select>
+      <ol class="rinci mt-3 ps-3 mb-0" id="langkah3"></ol>
+    </div>
+  </div></div>
+</div></section>
+
+<!-- ================= KALKULATOR 4: KOMBINASI & PERMUTASI ================= -->
+<section class="halaman d-none" data-halaman="kombinasi"><div class="hal">
+  <a class="kembali" href="#bukti">&larr; Kembali ke Bukti Belajar</a>
+  <div class="judul-hal"><div class="lencana lg" aria-hidden="true">nCr</div>
+    <div><h1 class="grad">Kalkulator Kombinasi</h1><p>Hitung permutasi P(n, r) dan kombinasi C(n, r).</p></div></div>
+  <div class="card kartu"><div class="card-body p-4">
+    <form id="f4" novalidate>
+      <div class="row g-3 mb-2">
+        <div class="col-6"><label class="form-label" for="n4">n (banyak objek)</label>
+          <input id="n4" class="form-control" inputmode="numeric" value="10" autocomplete="off">
+          <input id="sn" type="range" class="form-range mt-2" min="0" max="30" value="10" aria-label="Geser nilai n"></div>
+        <div class="col-6"><label class="form-label" for="r4">r (yang dipilih)</label>
+          <input id="r4" class="form-control" inputmode="numeric" value="3" autocomplete="off">
+          <input id="sr" type="range" class="form-range mt-2" min="0" max="30" value="3" aria-label="Geser nilai r"></div>
+      </div>
+      <div class="rumus mb-3">Syarat: 0 &le; r &le; n (bilangan bulat)</div>
+      <button class="btn btn-pb w-100 py-2" type="submit">Hitung</button>
+    </form>
+    <div id="err4" class="alert alert-danger mt-3 mb-0 d-none" role="alert"></div>
+    <div id="box4" class="mt-4" aria-live="polite">
+      <div class="hasil mb-3">
+        <div class="label-hasil">Permutasi</div>
+        <div class="rumus">P(n, r) = n! / (n &minus; r)!</div>
+        <div class="rumus" id="pP"></div>
+        <div class="angka" id="hasilP"></div>
+        <ol class="rinci ps-3 mb-0 mt-2" id="prosesP"></ol>
+      </div>
+      <div class="hasil">
+        <div class="label-hasil">Kombinasi</div>
+        <div class="rumus">C(n, r) = n! / (r! (n &minus; r)!)</div>
+        <div class="rumus" id="pC"></div>
+        <div class="angka" id="hasilC"></div>
+        <ol class="rinci ps-3 mb-0 mt-2" id="prosesC"></ol>
+      </div>
+    </div>
+  </div></div>
+</div></section>
+
+<footer>Matematika Informatika &middot; TA 20261</footer>
+
+<!-- ================= MASKOT SUNNY (melayang di semua halaman selain beranda) ================= -->
+<div class="mimo">
+  <div class="bubble" id="bubFloat" role="status" aria-live="polite"></div>
+  <button class="maskot" id="mimoFloat" data-mimo type="button" aria-label="Sunny, maskot Bukti Belajar. Klik untuk menyapa."></button>
+</div>
+
+<!-- Gambar Sunny (dipakai di dua tempat) -->
+<template id="tplSunny">
+  <svg viewBox="0 0 200 230" aria-hidden="true">
+    <g class="badan">
+      <g class="ekor kiri"><path d="M52 80 Q14 96 24 150 Q28 176 46 160 Q40 130 62 104Z" fill="#2E7D86"/></g>
+      <g class="ekor kanan"><path d="M148 80 Q186 96 176 150 Q172 176 154 160 Q160 130 138 104Z" fill="#2E7D86"/></g>
+      <ellipse cx="100" cy="86" rx="58" ry="56" fill="#004953"/>
+      <path d="M58 228 Q58 160 100 156 Q142 160 142 228Z" fill="#6E7D43"/>
+      <path d="M84 158 L100 178 L116 158Z" fill="#fff"/>
+      <circle cx="100" cy="206" r="8" fill="#F2C94C"/>
+      <rect x="90" y="132" width="20" height="28" rx="8" fill="#FFD9C4"/>
+      <ellipse cx="100" cy="96" rx="50" ry="46" fill="#FFE3D3"/>
+      <ellipse cx="68" cy="114" rx="9" ry="5" fill="#E5A99A" opacity=".6"/>
+      <ellipse cx="132" cy="114" rx="9" ry="5" fill="#E5A99A" opacity=".6"/>
+      <g class="mata">
+        <ellipse cx="78" cy="98" rx="10" ry="12" fill="#fff"/>
+        <circle cx="78" cy="99" r="8" fill="#8A9A5B"/><circle cx="78" cy="99" r="4" fill="#0F2F32"/><circle cx="75" cy="95" r="3" fill="#fff"/>
+        <ellipse cx="122" cy="98" rx="10" ry="12" fill="#fff"/>
+        <circle cx="122" cy="99" r="8" fill="#8A9A5B"/><circle cx="122" cy="99" r="4" fill="#0F2F32"/><circle cx="119" cy="95" r="3" fill="#fff"/>
+      </g>
+      <g fill="none" stroke="#0F2F32" stroke-width="2.5" stroke-linecap="round">
+        <circle cx="78" cy="98" r="15"/><circle cx="122" cy="98" r="15"/><path d="M93 98 Q100 93 107 98"/>
+      </g>
+      <path class="m-normal" d="M92 120 Q100 128 108 120" fill="none" stroke="#0F2F32" stroke-width="2.5" stroke-linecap="round"/>
+      <path class="m-senang" d="M90 118 Q100 136 110 118Z" fill="#004953" stroke="#0F2F32" stroke-width="2" stroke-linejoin="round"/>
+      <path class="m-sedih" d="M92 126 Q100 116 108 126" fill="none" stroke="#0F2F32" stroke-width="2.5" stroke-linecap="round"/>
+      <path class="keringat" d="M152 64 Q158 76 152 82 Q146 76 152 64Z" fill="#B5C189"/>
+      <path d="M48 92 Q50 42 100 40 Q150 42 152 92 Q138 66 112 70 Q100 58 88 70 Q62 66 48 92Z" fill="#2E7D86"/>
+      <g transform="translate(128 58)">
+        <circle r="7" fill="#F2C94C"/>
+        <path d="M0-12V-9M0 9V12M-12 0H-9M9 0H12M-8.5-8.5L-6.5-6.5M6.5 6.5L8.5 8.5M-8.5 8.5L-6.5 6.5M6.5-6.5L8.5-8.5" stroke="#F2C94C" stroke-width="2" stroke-linecap="round" fill="none"/>
+      </g>
+      <path d="M62 172 Q40 190 46 214 Q60 218 66 200Z" fill="#6E7D43"/>
+      <g class="lambai">
+        <path d="M138 172 Q164 150 160 118 Q148 114 144 130 Q140 150 132 160Z" fill="#6E7D43"/>
+        <circle cx="153" cy="112" r="9" fill="#FFE3D3"/>
+      </g>
+    </g>
+  </svg>
+</template>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const mod = (x, n) => ((x % n) + n) % n;
+const diam = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+/* ---------- Bintang muncul saat diklik atau disentuh ---------- */
+const WARNA = ["#2E7D86", "#8A9A5B", "#9CC3C3", "#B5C189"];
+const BENTUK = ["\u2605", "\u2726", "\u2606"];
+function bintang(x, y, jumlah){
+  if (diam.matches) return;
+  for (let i = 0; i < jumlah; i++){
+    const s = document.createElement("span");
+    const sudut = Math.random() * 2 * Math.PI, jarak = 40 + Math.random() * 70;
+    s.className = "star";
+    s.textContent = BENTUK[i % BENTUK.length];
+    s.style.left = x + "px"; s.style.top = y + "px";
+    s.style.fontSize = (12 + Math.random() * 16) + "px";
+    s.style.color = WARNA[Math.floor(Math.random() * WARNA.length)];
+    s.style.setProperty("--dx", Math.round(Math.cos(sudut) * jarak) + "px");
+    s.style.setProperty("--dy", Math.round(Math.sin(sudut) * jarak) + "px");
+    s.style.setProperty("--r", Math.round(Math.random() * 240 - 120) + "deg");
+    s.addEventListener("animationend", () => s.remove());
+    document.body.appendChild(s);
+  }
+}
+document.addEventListener("pointerdown", e => bintang(e.clientX, e.clientY, 10));
+
+/* ---------- Maskot Sunny (beranda: besar di tengah, halaman lain: melayang) ---------- */
+document.querySelectorAll("[data-mimo]").forEach(b => { b.innerHTML = $("tplSunny").innerHTML; });
+const M = {hero: {btn: $("mimoHero"), bub: $("bubHero"), t: 0}, float: {btn: $("mimoFloat"), bub: $("bubFloat"), t: 0}};
+function ucap(m, teks, ekspresi, tetap){
+  m.bub.textContent = teks;
+  m.bub.classList.add("tampil");
+  m.btn.classList.remove("senang", "sedih");
+  if (ekspresi) m.btn.classList.add(ekspresi);
+  clearTimeout(m.t);
+  if (!tetap) m.t = setTimeout(() => { m.bub.classList.remove("tampil"); m.btn.classList.remove("senang", "sedih"); }, 3800);
+}
+const aktifMimo = () => document.body.classList.contains("di-hero") ? M.hero : M.float;
+function bicara(teks, ekspresi){ ucap(aktifMimo(), teks, ekspresi); }
+function loncat(m){
+  m.btn.classList.remove("loncat"); void m.btn.offsetWidth; m.btn.classList.add("loncat");
+  setTimeout(() => m.btn.classList.remove("loncat"), 500);
+}
+const SAPA = ["Halo! Aku Sunny, maskot Bukti Belajar.", "Ayo coba salah satu kalkulator!", "Sisa pembagian itu seru, lho!",
+  "Kongruensi artinya sisanya sama.", "Klik di mana saja, nanti ada bintang!"];
+let iSapa = 0;
+[M.hero, M.float].forEach(m => m.btn.addEventListener("click", () => { loncat(m); ucap(m, SAPA[iSapa++ % SAPA.length], "senang"); }));
+
+/* ---------- Data pengguna (tersimpan di browser) ---------- */
+const KOSONG = {nama:"", nim:"", prodi:"", fakultas:"", hobi:"", foto:"", tersimpan:false};
+function muat(){ try { return Object.assign({}, KOSONG, JSON.parse(localStorage.getItem("biodata") || "{}")); } catch (e) { return Object.assign({}, KOSONG); } }
+function simpanBio(){ try { localStorage.setItem("biodata", JSON.stringify(bio)); } catch (e) {} }
+let bio = muat();
+const depan = () => bio.nama.split(/\s+/)[0];
+
+/* ---------- Daftar kalkulator, menu, dan kartu di halaman Bukti Belajar ---------- */
+const KALK = [
+  {id:"modulo", simbol:"mod", judul:"Kalkulator Modulo", ket:"Hitung sisa pembagian a mod m lengkap dengan prosesnya dan jam modulo."},
+  {id:"kongruensi", simbol:"\u2261", judul:"Kalkulator Kongruensi", ket:"Periksa apakah a kongruen dengan b modulo m beserta proses pengecekannya."},
+  {id:"bilangan", simbol:"bin", judul:"Kalkulator Sistem Bilangan", ket:"Ubah biner, oktal, desimal, dan heksadesimal beserta langkahnya."},
+  {id:"kombinasi", simbol:"nCr", judul:"Kalkulator Kombinasi", ket:"Hitung permutasi P(n,r) dan kombinasi C(n,r) lengkap dengan prosesnya."}
+];
+const RUTE = {"": "Beranda", biodata: "Biodata", bukti: "Bukti Belajar"};
+KALK.forEach(k => RUTE[k.id] = k.judul);
+$("menu").innerHTML = '<a href="#">Beranda</a><a href="#biodata">Biodata</a><a href="#bukti">Bukti Belajar</a>';
+$("daftar").innerHTML = KALK.map(k =>
+  '<div class="col-12 col-sm-6"><a class="menu-kartu" href="#' + k.id + '"><div class="lencana mb-3" aria-hidden="true">' + k.simbol +
+  '</div><h3>' + k.judul + '</h3><p>' + k.ket + '</p><span class="buka">Buka halaman &rarr;</span></a></div>').join("");
+
+/* ---------- Router: tiap halaman punya alamat sendiri ---------- */
+function rute(){
+  let h = location.hash.slice(1);
+  if (!(h in RUTE) || (h && !bio.nama)) h = "";
+  if (location.hash.slice(1) !== h){
+    try { history.replaceState(null, "", location.pathname + location.search + (h ? "#" + h : "")); } catch (e) {}
+  }
+  document.querySelectorAll(".halaman").forEach(s => s.classList.toggle("d-none", s.dataset.halaman !== h));
+  const induk = KALK.some(k => k.id === h) ? "bukti" : h;
+  document.querySelectorAll("#menu a").forEach(a => a.classList.toggle("aktif", a.getAttribute("href") === "#" + induk));
+  document.body.classList.toggle("di-hero", h === "");
+  document.title = (h ? RUTE[h] + " | " : "") + "Bukti Belajar | Matematika Informatika";
+  window.scrollTo(0, 0);
+  if (h === "biodata") bicara("Ceritakan sedikit tentang dirimu, " + depan() + "!", "senang");
+  else if (h === "bukti") bicara("Pilih kalkulator yang mau dicoba, " + depan() + "!", "senang");
+  else if (h) bicara("Selamat mencoba " + RUTE[h].toLowerCase() + "!", "senang");
+}
+window.addEventListener("hashchange", rute);
+
+function bukaSitus(){
+  $("menu").classList.remove("d-none");
+  $("btnLanjut").classList.remove("d-none");
+}
+
+/* ---------- Halaman 1: input nama + sapaan ---------- */
+$("formNama").addEventListener("submit", e => {
+  e.preventDefault();
+  const v = $("nama0").value.trim();
+  if (!v){
+    $("errNama").classList.remove("d-none");
+    ucap(M.hero, "Ketik namamu dulu, ya!", "sedih", true);
+    $("nama0").focus();
+    return;
+  }
+  $("errNama").classList.add("d-none");
+  bio.nama = v; simpanBio();
+  isiProfil(); bukaSitus();
+  loncat(M.hero);
+  ucap(M.hero, "Halo, " + depan() + "! Aku Sunny. Senang bertemu denganmu!", "senang", true);
+  const r = e.submitter ? e.submitter.getBoundingClientRect() : null;
+  if (r) bintang(r.left + r.width / 2, r.top, 14);
+});
+
+/* ---------- Halaman 2: biodata, foto profil, dan profil ---------- */
+let fotoTemp = "";
+function setAvatar(el, foto, nama){
+  el.innerHTML = "";
+  if (foto && foto.startsWith("data:image/")){
+    const img = document.createElement("img");
+    img.src = foto; img.alt = "Foto profil " + nama;
+    el.appendChild(img);
+  } else {
+    el.textContent = nama.split(/\s+/).filter(Boolean).slice(0, 2).map(k => k[0].toUpperCase()).join("") || "?";
+  }
+}
+function isiProfil(){
+  const o = t => t || "-";
+  $("bNama").textContent = bio.nama || "-"; $("bNim").textContent = o(bio.nim);
+  $("bProdi").textContent = o(bio.prodi); $("bFakultas").textContent = o(bio.fakultas);
+  setAvatar($("avatar"), bio.foto, bio.nama);
+  $("bHobi").innerHTML = "";
+  const hobi = bio.hobi.split(",").map(h => h.trim()).filter(Boolean);
+  if (!hobi.length) $("bHobi").textContent = "-";
+  hobi.forEach(h => { const c = document.createElement("span"); c.className = "chip"; c.textContent = h; $("bHobi").appendChild(c); });
+}
+function modeUbah(ubah){
+  $("tampilBio").classList.toggle("d-none", ubah);
+  $("formBio").classList.toggle("d-none", !ubah);
+  $("btnUbah").classList.toggle("d-none", ubah || !bio.tersimpan);
+  $("btnBatal").classList.toggle("d-none", !bio.tersimpan);
+  if (ubah){
+    $("eNama").value = bio.nama; $("eNim").value = bio.nim; $("eProdi").value = bio.prodi;
+    $("eFakultas").value = bio.fakultas; $("eHobi").value = bio.hobi;
+    $("eFoto").value = ""; $("errFoto").classList.add("d-none");
+    fotoTemp = bio.foto; setAvatar($("fotoPrev"), fotoTemp, bio.nama);
+  }
+}
+// Gambar dipotong persegi dan dikecilkan agar hemat ruang penyimpanan
+function olahFoto(file){
+  return new Promise((ok, gagal) => {
+    if (!file.type.startsWith("image/")) return gagal(new Error("File harus berupa gambar."));
+    if (file.size > 8 * 1024 * 1024) return gagal(new Error("Ukuran gambar maksimal 8 MB."));
+    const fr = new FileReader();
+    fr.onerror = () => gagal(new Error("Gagal membaca gambar."));
+    fr.onload = () => {
+      const img = new Image();
+      img.onerror = () => gagal(new Error("Gambar tidak bisa dibuka."));
+      img.onload = () => {
+        const S = 240, c = document.createElement("canvas");
+        c.width = c.height = S;
+        const m = Math.min(img.width, img.height);
+        c.getContext("2d").drawImage(img, (img.width - m) / 2, (img.height - m) / 2, m, m, 0, 0, S, S);
+        ok(c.toDataURL("image/jpeg", .85));
+      };
+      img.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+  });
+}
+$("eFoto").addEventListener("change", async () => {
+  const f = $("eFoto").files[0];
+  $("errFoto").classList.add("d-none");
+  if (!f) return;
+  try { fotoTemp = await olahFoto(f); setAvatar($("fotoPrev"), fotoTemp, $("eNama").value || bio.nama); }
+  catch (e) { $("errFoto").textContent = e.message; $("errFoto").classList.remove("d-none"); $("eFoto").value = ""; }
+});
+$("btnHapusFoto").addEventListener("click", () => {
+  fotoTemp = ""; $("eFoto").value = ""; $("errFoto").classList.add("d-none");
+  setAvatar($("fotoPrev"), "", $("eNama").value || bio.nama);
+});
+$("btnUbah").addEventListener("click", () => { modeUbah(true); $("eNama").focus(); });
+$("btnBatal").addEventListener("click", () => modeUbah(false));
+$("formBio").addEventListener("submit", e => {
+  e.preventDefault();
+  bio = {nama: $("eNama").value.trim() || bio.nama, nim: $("eNim").value.trim(), prodi: $("eProdi").value.trim(),
+    fakultas: $("eFakultas").value.trim(), hobi: $("eHobi").value.trim(), foto: fotoTemp, tersimpan: true};
+  simpanBio(); isiProfil(); modeUbah(false);
+  $("nama0").value = bio.nama;
+  bicara("Profilmu tersimpan, " + depan() + "!", "senang");
+});
+
+/* ---------- Pembantu kalkulator ---------- */
+function bil(id, nama){
+  const t = $(id).value.trim();
+  if (!/^[+-]?\d+$/.test(t)) throw new Error(nama + " harus berupa bilangan bulat.");
+  return BigInt(t);
+}
+function modulus(id, nama){
+  const m = bil(id, nama);
+  if (m <= 0n) throw new Error(nama + " harus lebih dari 0.");
+  return m;
+}
+function galat(n, pesan){
+  const e = $("err" + n);
+  if (pesan){ e.textContent = pesan; e.classList.remove("d-none"); $("box" + n).classList.add("d-none"); }
+  else { e.classList.add("d-none"); $("box" + n).classList.remove("d-none"); }
+}
+function angka(el, teks){ el.textContent = teks; el.classList.toggle("panjang", teks.length > 14); }
+function isiLangkah(id, daftar){
+  const ol = $(id); ol.innerHTML = "";
+  daftar.forEach(t => { const li = document.createElement("li"); li.textContent = t; ol.appendChild(li); });
+}
+// Hasil langsung berubah saat mengetik (tanpa suara Sunny); tombol memicu suara Sunny
+function pasang(idForm, fn){
+  const f = $(idForm);
+  f.addEventListener("input", () => fn(false));
+  f.addEventListener("change", () => fn(false));
+  f.addEventListener("submit", e => { e.preventDefault(); fn(true); });
+}
+
+/* ---------- 1. Modulo ---------- */
+function jamSVG(n, r){
+  const N = Number(n);
+  if (N > 24) return '<div class="rumus text-center mt-2">Jam modulo ditampilkan untuk m \u2264 24.</div>';
+  let s = '<svg viewBox="0 0 200 200" role="img" aria-label="Jam modulo ' + N + ', hasil ' + r + '"><circle class="cincin" cx="100" cy="100" r="66"/>';
+  for (let k = 0; k < N; k++){
+    const a = (k / N) * 2 * Math.PI - Math.PI / 2;
+    s += '<circle class="tk" cx="' + (100 + 66 * Math.cos(a)).toFixed(1) + '" cy="' + (100 + 66 * Math.sin(a)).toFixed(1) + '" r="2"/>' +
+      '<text' + (BigInt(k) === r ? ' class="hit"' : '') + ' x="' + (100 + 84 * Math.cos(a)).toFixed(1) + '" y="' + (100 + 84 * Math.sin(a)).toFixed(1) + '">' + k + '</text>';
+  }
+  const ra = (Number(r) / N) * 2 * Math.PI - Math.PI / 2, x = (100 + 66 * Math.cos(ra)).toFixed(1), y = (100 + 66 * Math.sin(ra)).toFixed(1);
+  return s + '<line class="tg" x1="100" y1="100" x2="' + x + '" y2="' + y + '"/><circle class="dt" cx="' + x + '" cy="' + y + '" r="5"/><circle class="dt" cx="100" cy="100" r="3"/></svg>';
+}
+function hitungModulo(suara){
+  try {
+    const a = bil("a1", "Bilangan a"), m = modulus("m1", "Modulus m");
+    const r = mod(a, m), q = (a - r) / m;
+    galat(1);
+    $("pers1").textContent = a + " mod " + m;
+    angka($("hasil1"), r.toString());
+    isiLangkah("proses1", [
+      `Bagi ${a} dengan ${m}, lalu bulatkan ke bawah: q = ${q}`,
+      `Kalikan: q \u00D7 m = ${q} \u00D7 ${m} = ${q * m}`,
+      `Sisa: r = a \u2212 q \u00D7 m = ${a} \u2212 ${q * m} = ${r}`,
+      `Cek: 0 \u2264 ${r} < ${m}, jadi ${a} = ${q} \u00D7 ${m} + ${r}`
+    ]);
+    $("jam1").innerHTML = jamSVG(m, r);
+    if (suara) bicara("Sisanya " + r + "! Karena " + a + " mod " + m + " = " + r + ".", "senang");
+  } catch (e) { galat(1, e.message); if (suara) bicara("Hmm, cek lagi isiannya ya.", "sedih"); }
+}
+pasang("f1", hitungModulo);
+
+/* ---------- 2. Kongruensi ---------- */
+function cekKongruensi(suara){
+  try {
+    const a = bil("a2", "Bilangan a"), b = bil("b2", "Bilangan b"), m = modulus("m2", "Modulus m");
+    const ra = mod(a, m), rb = mod(b, m), d = a - b, kongruen = ra === rb;
+    galat(2);
+    $("pers2").textContent = a + " \u2261 " + b + " (mod " + m + ") ?";
+    $("status2").textContent = kongruen ? "Kongruen" : "Tidak kongruen";
+    $("status2").className = "status " + (kongruen ? "ok" : "no");
+    $("kalimat2").textContent = kongruen
+      ? a + " kongruen dengan " + b + " modulo " + m + "."
+      : a + " tidak kongruen dengan " + b + " modulo " + m + ".";
+    isiLangkah("proses2", [
+      `Sisa a: ${a} mod ${m} = ${ra}`,
+      `Sisa b: ${b} mod ${m} = ${rb}`,
+      `Bandingkan sisa: ${ra} ${kongruen ? "=" : "\u2260"} ${rb}`,
+      `Cek selisih: a \u2212 b = ${a} \u2212 ${b} = ${d}` + (kongruen ? `, dan ${d} = ${d / m} \u00D7 ${m} (habis dibagi ${m})` : `, dan ${d} tidak habis dibagi ${m}`),
+      kongruen ? `Kesimpulan: ${a} \u2261 ${b} (mod ${m})` : `Kesimpulan: ${a} \u2262 ${b} (mod ${m})`
+    ]);
+    if (suara) kongruen ? bicara("Kongruen! " + a + " dan " + b + " sama-sama bersisa " + ra + ".", "senang")
+                        : bicara("Tidak kongruen. Sisanya berbeda: " + ra + " dan " + rb + ".", "sedih");
+  } catch (e) { galat(2, e.message); if (suara) bicara("Hmm, cek lagi isiannya ya.", "sedih"); }
+}
+pasang("f2", cekKongruensi);
+
+/* ---------- 3. Sistem bilangan ---------- */
+const POLA = {2:/^[01]+$/, 8:/^[0-7]+$/, 10:/^\d+$/, 16:/^[0-9a-f]+$/i};
+const AWAL = {2:"0b", 8:"0o", 10:"", 16:"0x"};
+const NAMA_BASIS = {2:"Biner", 8:"Oktal", 10:"Desimal", 16:"Heksadesimal"};
+let nilaiBil = 0n;
+function langkahBagi(x, b){
+  let n = x < 0n ? -x : x;
+  const B = BigInt(b), baris = [], sisa = [];
+  if (n === 0n) return ["0 \u00F7 " + b + " = 0 sisa 0", "Hasil: 0"];
+  while (n > 0n){
+    const q = n / B, r = (n % B).toString(b).toUpperCase();
+    baris.push(n + " \u00F7 " + b + " = " + q + " sisa " + r);
+    sisa.push(r); n = q;
+  }
+  baris.push("Baca sisa dari bawah ke atas: " + (x < 0n ? "\u2212" : "") + sisa.reverse().join(""));
+  return baris;
+}
+function gambarLangkah(){ isiLangkah("langkah3", langkahBagi(nilaiBil, Number($("ke3").value))); }
+function konversi(suara){
+  try {
+    const dari = Number($("dari3").value);
+    let t = $("nilai3").value.trim();
+    const neg = t[0] === "-";
+    t = t.replace(/^[+-]/, "");
+    if (!t || !POLA[dari].test(t)) throw new Error("Isi tidak valid untuk basis " + dari + " (" + NAMA_BASIS[dari].toLowerCase() + ").");
+    nilaiBil = BigInt(AWAL[dari] + t) * (neg ? -1n : 1n);
+    galat(3);
+    $("baris3").innerHTML = "";
+    [2, 8, 10, 16].forEach(b => {
+      const s = nilaiBil.toString(b).toUpperCase();
+      const d = document.createElement("div");
+      d.className = "baris"; d.setAttribute("role", "button"); d.tabIndex = 0;
+      d.innerHTML = '<span class="label-hasil">' + NAMA_BASIS[b] + ' (' + b + ')</span><b></b>';
+      d.lastChild.textContent = s;
+      const salin = async () => { try { await navigator.clipboard.writeText(s); bicara("Disalin: " + s, "senang"); } catch (e) { bicara("Gagal menyalin, coba blok manual ya.", "sedih"); } };
+      d.addEventListener("click", salin);
+      d.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " "){ e.preventDefault(); salin(); } });
+      $("baris3").appendChild(d);
+    });
+    gambarLangkah();
+    if (suara) bicara("Desimalnya " + nilaiBil + ", biner " + nilaiBil.toString(2) + ".", "senang");
+  } catch (e) { galat(3, e.message); if (suara) bicara("Hmm, isiannya belum cocok dengan basisnya.", "sedih"); }
+}
+pasang("f3", konversi);
+$("ke3").addEventListener("change", gambarLangkah);
+
+/* ---------- 4. Permutasi dan kombinasi ---------- */
+const fak = n => { let r = 1n; for (let i = 2n; i <= n; i++) r *= i; return r; };
+const ringkas = b => { const s = b.toString(); return s.length <= 24 ? s : s.slice(0, 12) + "\u2026" + s.slice(-6) + " (" + s.length + " digit)"; };
+function deret(n, r){
+  const suku = [];
+  for (let i = 0n; i < r && i < 4n; i++) suku.push((n - i).toString());
+  return r > 4n ? suku.join(" \u00D7 ") + " \u00D7 \u2026 \u00D7 " + (n - r + 1n) : suku.join(" \u00D7 ");
+}
+function hitungKomb(suara){
+  try {
+    const ns = $("n4").value.trim(), rs = $("r4").value.trim();
+    if (!/^\d+$/.test(ns) || !/^\d+$/.test(rs)) throw new Error("n dan r harus bilangan bulat tidak negatif, dengan syarat 0 \u2264 r \u2264 n.");
+    const n = BigInt(ns), r = BigInt(rs);
+    if (n > 500n) throw new Error("n maksimal 500 supaya perhitungan tetap cepat.");
+    if (r > n) throw new Error("Syarat 0 \u2264 r \u2264 n tidak terpenuhi: r = " + r + " lebih besar dari n = " + n + ".");
+    const fn = fak(n), fr = fak(r), fnr = fak(n - r), peny = fr * fnr;
+    const P = fn / fnr, C = fn / peny;
+    galat(4);
+
+    $("pP").textContent = "P(" + n + ", " + r + ")";
+    angka($("hasilP"), P.toString());
+    isiLangkah("prosesP", [
+      `Substitusi: P(${n}, ${r}) = ${n}! / (${n} \u2212 ${r})! = ${n}! / ${n - r}!`,
+      `Nilai faktorial: ${n}! = ${ringkas(fn)} dan ${n - r}! = ${ringkas(fnr)}`,
+      `Hitung: ${ringkas(fn)} / ${ringkas(fnr)} = ${ringkas(P)}`,
+      r === 0n ? "Karena r = 0, tidak ada yang dipilih sehingga P(n, 0) = 1."
+               : `Bentuk singkat: ${deret(n, r)} = ${ringkas(P)}`
+    ]);
+
+    $("pC").textContent = "C(" + n + ", " + r + ")";
+    angka($("hasilC"), C.toString());
+    isiLangkah("prosesC", [
+      `Substitusi: C(${n}, ${r}) = ${n}! / (${r}! \u00D7 ${n - r}!)`,
+      `Nilai faktorial: ${n}! = ${ringkas(fn)}, ${r}! = ${ringkas(fr)}, ${n - r}! = ${ringkas(fnr)}`,
+      `Penyebut: ${r}! \u00D7 ${n - r}! = ${ringkas(fr)} \u00D7 ${ringkas(fnr)} = ${ringkas(peny)}`,
+      `Hitung: ${ringkas(fn)} / ${ringkas(peny)} = ${ringkas(C)}`
+    ]);
+
+    if (n <= 30n) $("sn").value = n;
+    if (r <= 30n) $("sr").value = r;
+    if (suara) bicara("P(" + n + "," + r + ") = " + (P.toString().length > 12 ? "angka besar" : P) + " dan C(" + n + "," + r + ") = " + (C.toString().length > 12 ? "angka besar" : C) + "!", "senang");
+  } catch (e) { galat(4, e.message); if (suara) bicara("Hmm, ingat syaratnya: 0 \u2264 r \u2264 n.", "sedih"); }
+}
+pasang("f4", hitungKomb);
+$("sn").addEventListener("input", () => {
+  $("n4").value = $("sn").value;
+  if (Number($("r4").value) > Number($("sn").value)){ $("r4").value = $("sn").value; $("sr").value = $("sn").value; }
+});
+$("sr").addEventListener("input", () => { $("r4").value = $("sr").value; });
+
+/* ---------- Mulai ---------- */
+hitungModulo(false); cekKongruensi(false); konversi(false); hitungKomb(false);
+isiProfil();
+modeUbah(!bio.tersimpan);
+if (bio.nama){
+  $("nama0").value = bio.nama;
+  bukaSitus();
+  ucap(M.hero, "Selamat datang kembali, " + depan() + "!", "senang", true);
+} else {
+  ucap(M.hero, "Halo! Aku Sunny. Siapa namamu?", null, true);
+}
+rute();
+</script>
+</body>
+</html>
