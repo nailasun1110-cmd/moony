@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bukti Belajar | Matematika Informatika</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+:root{--pink:#DB2F87;--blue:#2F63F0;--navy:#1F2A5C;--soft:#5C6491;--garis:#F0C4DA;--mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --latar:linear-gradient(rgba(47,99,240,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(47,99,240,.07) 1px,transparent 1px),linear-gradient(160deg,#FFE0EE 0%,#F4E6FF 50%,#DCEBFF 100%)}
+body{font-family:"Space Grotesk",system-ui,sans-serif;color:var(--navy);background:var(--latar);background-size:28px 28px,28px 28px,auto;background-attachment:fixed}
+body.terkunci{overflow:hidden}
+.grad{background:linear-gradient(90deg,var(--pink),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ---------- Pembuka ---------- */
+.pembuka{position:fixed;inset:0;z-index:1500;overflow-y:auto;display:flex;padding:1.5rem 1rem calc(1.5rem + env(safe-area-inset-bottom,0px));
+  background:var(--latar);background-size:28px 28px,28px 28px,auto;transition:transform .8s cubic-bezier(.7,0,.3,1),opacity .8s}
+.pembuka.keluar{transform:translateY(-100%);opacity:0;pointer-events:none}
+.pembuka-isi{margin:auto;width:100%;max-width:26rem;text-align:center}
+.ketik{min-height:3.4em;color:var(--soft);font-size:1.05rem;margin:.9rem 0 1.2rem}
+.ketik.jalan::after{content:"\258D";color:var(--pink);margin-left:.1rem;animation:kedipk 1s steps(1) infinite}
+@keyframes kedipk{50%{opacity:0}}
+.jam{width:min(62vw,13rem);display:block;margin:0 auto .5rem;overflow:visible}
+.jam .cincin{fill:none;stroke:var(--garis);stroke-width:2}
+.jam .titik{fill:var(--soft)}
+.jam text{font:700 12px var(--mono);fill:var(--soft);text-anchor:middle;dominant-baseline:central}
+.jam text.aktif{fill:var(--pink);font-size:15px}
+.jam .tangan{transform-origin:100px 100px;transition:transform .5s cubic-bezier(.3,1.5,.5,1)}
+.jam .tangan line{stroke:var(--pink);stroke-width:3.5;stroke-linecap:round}
+.jam .tangan circle{fill:var(--pink)}
+.jam .pusat{fill:var(--blue)}
+.hitung{font:700 1.5rem var(--mono);color:var(--blue)}
+.pesan-jam{min-height:1.4em;font-size:.9rem;color:var(--soft)}
+.lewati{background:none;border:0;color:var(--soft);text-decoration:underline;font-size:.9rem;margin-top:.9rem}
+
+/* ---------- Menu ---------- */
+.menu{position:sticky;top:0;z-index:900;display:flex;gap:.4rem;overflow-x:auto;padding:calc(.6rem + env(safe-area-inset-top,0px)) 1rem .6rem;
+  background:rgba(255,240,247,.88);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--garis)}
+.menu a{white-space:nowrap;padding:.4rem .9rem;border-radius:999px;color:var(--navy);text-decoration:none;font-weight:500;font-size:.9rem}
+.menu a:hover{background:rgba(47,99,240,.1)}
+.menu a.aktif{background:linear-gradient(135deg,var(--pink),var(--blue));color:#fff}
+
+/* ---------- Beranda ---------- */
+.hero{position:relative;overflow:hidden;text-align:center;padding:3rem 1rem 2.5rem}
+.eyebrow{letter-spacing:.18em;text-transform:uppercase;font-size:.8rem;font-weight:700;color:var(--pink)}
+.judul{font-size:clamp(2.8rem,9vw,4.8rem);font-weight:700;line-height:1.05;margin:.4rem 0 0}
+.subjudul{font-size:clamp(1rem,2.6vw,1.3rem);color:var(--soft);max-width:34rem;margin:1rem auto 0}
+.sim{position:absolute;font:700 clamp(2rem,8vw,5rem) var(--mono);color:var(--blue);opacity:.11;pointer-events:none;user-select:none}
+.menu-kartu{display:block;height:100%;padding:1.5rem;border-radius:1.25rem;background:rgba(255,255,255,.93);color:inherit;text-decoration:none;
+  box-shadow:0 .75rem 2rem rgba(47,99,240,.16);transition:transform .2s,box-shadow .2s}
+.menu-kartu:hover,.menu-kartu:focus-visible{transform:translateY(-5px);box-shadow:0 1.1rem 2.4rem rgba(219,47,135,.25);color:inherit}
+.menu-kartu h3{font-size:1.2rem;font-weight:700;margin:0 0 .3rem}
+.menu-kartu p{color:var(--soft);font-size:.93rem;margin:0 0 .9rem}
+.buka{font-weight:700;color:var(--pink);font-size:.92rem}
+
+/* ---------- Halaman kalkulator ---------- */
+.hal{max-width:40rem;margin:0 auto;padding:1.5rem 1rem 8rem}
+.judul-hal{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem}
+.judul-hal h1{font-size:clamp(1.6rem,6vw,2.2rem);font-weight:700;margin:0;line-height:1.1}
+.judul-hal p{margin:.2rem 0 0;color:var(--soft);font-size:.95rem}
+
+/* ---------- Kartu & form ---------- */
+.kartu{border:0;border-radius:1.25rem;background:rgba(255,255,255,.93);box-shadow:0 .75rem 2rem rgba(47,99,240,.16)}
+.lencana{flex:none;width:3rem;height:3rem;border-radius:.9rem;display:grid;place-items:center;color:#fff;font:700 1rem var(--mono);
+  background:linear-gradient(135deg,var(--pink),var(--blue))}
+.lencana.lg{width:3.6rem;height:3.6rem;font-size:1.1rem}
+.kartu h2{font-size:1.25rem;font-weight:700;margin:0}
+.form-label{font-weight:500;font-size:.9rem}
+.form-control,.form-select{font-family:var(--mono);font-weight:500;border-color:var(--garis);border-radius:.65rem}
+.form-control:focus,.form-select:focus{border-color:var(--pink);box-shadow:0 0 0 .2rem rgba(219,47,135,.2)}
+.form-range::-webkit-slider-thumb{background:var(--pink)}
+.form-range::-moz-range-thumb{background:var(--pink)}
+.btn-pb{background:linear-gradient(135deg,var(--pink),var(--blue));border:0;color:#fff;font-weight:700;border-radius:.65rem}
+.btn-pb:hover,.btn-pb:focus{color:#fff;filter:brightness(1.1)}
+.btn-garis{border:1.5px solid var(--blue);color:var(--blue);font-weight:600;border-radius:.65rem;background:transparent}
+.btn-garis:hover{background:var(--blue);color:#fff}
+
+/* ---------- Biodata ---------- */
+.avatar{flex:none;width:5.5rem;height:5.5rem;border-radius:50%;display:grid;place-items:center;color:#fff;font:700 1.9rem var(--mono);
+  background:linear-gradient(135deg,var(--pink),var(--blue));box-shadow:0 .4rem 1rem rgba(219,47,135,.3)}
+.bio dt{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);font-weight:700;margin:0}
+.bio dd{font-weight:500;margin:0 0 .6rem;overflow-wrap:anywhere}
+.nama{font-size:clamp(1.4rem,4vw,1.9rem);font-weight:700}
+.chip{display:inline-block;padding:.25rem .75rem;margin:0 .35rem .35rem 0;border-radius:999px;font-size:.88rem;font-weight:500;
+  background:linear-gradient(135deg,rgba(219,47,135,.14),rgba(47,99,240,.16))}
+
+/* ---------- Hasil ---------- */
+.hasil{border-radius:1rem;padding:1rem 1.25rem;background:linear-gradient(135deg,rgba(219,47,135,.09),rgba(47,99,240,.11))}
+.label-hasil{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--soft)}
+.rumus{font-family:var(--mono);font-size:.95rem;color:var(--soft);overflow-wrap:anywhere}
+.angka{font:700 clamp(2.8rem,10vw,3.8rem)/1.05 var(--mono);color:var(--blue);overflow-wrap:anywhere}
+.angka.panjang{font-size:1.35rem;line-height:1.3}
+.status{font:700 clamp(2.4rem,9vw,3.4rem)/1.05 var(--mono)}
+.ok{color:var(--blue)}
+.no{color:var(--pink)}
+.rinci{font-family:var(--mono);font-size:.9rem;overflow-wrap:anywhere}
+.baris{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.65rem 0;border-bottom:1px dashed var(--garis);cursor:pointer}
+.baris:last-child{border-bottom:0}
+.baris b{font:700 1.15rem var(--mono);color:var(--blue);text-align:right;overflow-wrap:anywhere}
+.jam-mod svg{width:min(100%,13rem);display:block;margin:.5rem auto 0}
+.jam-mod .cincin{fill:none;stroke:var(--garis);stroke-width:1.5}
+.jam-mod .tk{fill:var(--soft)}
+.jam-mod text{font:600 10px var(--mono);fill:var(--soft);text-anchor:middle;dominant-baseline:central}
+.jam-mod .hit{fill:var(--pink);font-size:13px}
+.jam-mod .tg{stroke:var(--pink);stroke-width:2.5;stroke-linecap:round}
+.jam-mod .dt{fill:var(--pink)}
+footer{text-align:center;color:var(--soft);font-size:.85rem;padding:0 1rem 7rem}
+
+/* ---------- Maskot Mimo (melayang di semua halaman) ---------- */
+.mimo{position:fixed;right:.75rem;bottom:calc(.75rem + env(safe-area-inset-bottom,0px));z-index:1000;display:flex;flex-direction:column;align-items:flex-end;pointer-events:none}
+.mimo>*{pointer-events:auto}
+.bubble{position:relative;max-width:min(17rem,68vw);background:#fff;border-radius:1rem;padding:.55rem .95rem;font-weight:500;font-size:.9rem;
+  box-shadow:0 .4rem 1rem rgba(47,99,240,.2);margin-bottom:.7rem;opacity:0;transform:translateY(6px);transition:opacity .25s,transform .25s;pointer-events:none}
+.bubble.tampil{opacity:1;transform:none}
+.bubble::after{content:"";position:absolute;right:2.2rem;bottom:-.45rem;width:.9rem;height:.9rem;background:#fff;transform:rotate(45deg);border-radius:0 0 .2rem 0}
+.maskot{background:none;border:0;padding:0;width:5.5rem;cursor:pointer;display:block;-webkit-tap-highlight-color:transparent}
+.maskot svg{width:100%;height:auto;overflow:visible;filter:drop-shadow(0 .4rem .5rem rgba(31,42,92,.2))}
+.badan{animation:melayang 3.2s ease-in-out infinite}
+@keyframes melayang{50%{transform:translateY(-5px)}}
+.mata{transform-box:fill-box;transform-origin:center;animation:kedip 4.5s infinite}
+@keyframes kedip{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.08)}}
+.ekor{transform-box:fill-box;transform-origin:50% 0;animation:ayun 3s ease-in-out infinite}
+.ekor.kanan{animation-delay:-1.5s}
+@keyframes ayun{0%,100%{transform:rotate(4deg)}50%{transform:rotate(-4deg)}}
+.lambai{transform-box:fill-box;transform-origin:40% 95%;animation:lambai 1.6s ease-in-out infinite}
+@keyframes lambai{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(14deg)}}
+.maskot.loncat .badan{animation:loncat .5s ease-out}
+@keyframes loncat{0%{transform:translateY(0)}40%{transform:translateY(-20px) scale(1.04)}100%{transform:translateY(0)}}
+.m-senang,.m-sedih,.keringat{display:none}
+.maskot.senang .m-normal,.maskot.sedih .m-normal{display:none}
+.maskot.senang .m-senang,.maskot.sedih .m-sedih,.maskot.sedih .keringat{display:inline}
+@media (prefers-reduced-motion:reduce){.badan,.mata,.ekor,.lambai,.ketik.jalan::after{animation:none}.pembuka,.jam .tangan,.menu-kartu{transition:none}}
+
+/* ---------- Bintang ---------- */
+.star{position:fixed;pointer-events:none;z-index:2000;line-height:1;animation:pop .9s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes pop{
+  0%{transform:translate(-50%,-50%) scale(.3) rotate(0deg);opacity:1}
+  100%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1) rotate(var(--r));opacity:0}
+}
+</style>
+</head>
+<body class="terkunci">
+
+<!-- ================= PEMBUKA INTERAKTIF ================= -->
+<div id="pembuka" class="pembuka" role="dialog" aria-modal="true" aria-label="Pembuka Bukti Belajar">
+  <div class="pembuka-isi">
+    <div class="eyebrow">Selamat datang</div>
+    <div class="judul grad">Bukti Belajar</div>
+    <p class="ketik jalan" id="ketik" aria-live="polite"></p>
+
+    <div class="kartu p-3 mb-3">
+      <div class="label-hasil mb-1">Coba dulu: jam modulo 5</div>
+      <svg class="jam" id="jam" viewBox="0 0 200 200" role="img" aria-label="Jam modulo 5">
+        <circle class="cincin" cx="100" cy="100" r="68"/>
+        <g class="tangan" id="tangan"><line x1="100" y1="100" x2="100" y2="40"/><circle cx="100" cy="34" r="6"/></g>
+        <circle class="pusat" cx="100" cy="100" r="5"/>
+      </svg>
+      <div class="hitung" id="hitungTeks">0 mod 5 = 0</div>
+      <div class="pesan-jam" id="pesanJam"></div>
+      <div class="d-flex gap-2 justify-content-center mt-2">
+        <button id="btnTambah" class="btn btn-pb px-4" type="button">+1</button>
+        <button id="btnUlang" class="btn btn-garis px-3" type="button">Ulang</button>
+      </div>
+    </div>
+
+    <form id="formMasuk" novalidate>
+      <label class="form-label" for="nama0">Siapa namamu?</label>
+      <input id="nama0" class="form-control text-center mb-2" maxlength="40" placeholder="Ketik namamu di sini" autocomplete="off">
+      <button class="btn btn-pb w-100 py-2" type="submit">Mulai belajar</button>
+    </form>
+    <button id="btnLewati" class="lewati" type="button">Lewati</button>
+  </div>
+</div>
+
+<!-- ================= SITUS ================= -->
+<div id="situs" inert>
+
+<nav class="menu" id="menu" aria-label="Navigasi utama"></nav>
+
+<!-- ===== Beranda ===== -->
+<section class="halaman" data-halaman="">
+  <header class="hero">
+    <span class="sim" style="left:5%;top:14%" aria-hidden="true">mod</span>
+    <span class="sim" style="right:6%;top:10%" aria-hidden="true">&equiv;</span>
+    <span class="sim" style="left:12%;bottom:6%" aria-hidden="true">&sum;</span>
+    <span class="sim" style="right:10%;bottom:10%" aria-hidden="true">{ }</span>
+    <div class="position-relative">
+      <div class="eyebrow">Matematika Informatika</div>
+      <h1 class="judul grad">Bukti Belajar</h1>
+      <p class="subjudul">Perjalanan belajar Matematika Informatika bersama Pa Iin TA 20261</p>
+    </div>
+  </header>
+
+  <main class="container pb-2" style="max-width:62rem">
+    <section class="card kartu mb-5" aria-labelledby="judulBio"><div class="card-body p-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 id="judulBio">Biodata</h2>
+        <button id="btnUbah" class="btn btn-garis btn-sm px-3" type="button">Ubah biodata</button>
+      </div>
+      <div id="tampilBio" class="d-flex flex-column flex-sm-row align-items-center align-items-sm-start gap-4">
+        <div class="avatar" id="avatar" aria-hidden="true"></div>
+        <dl class="bio flex-grow-1 mb-0 w-100">
+          <div class="nama mb-2" id="bNama"></div>
+          <div class="row">
+            <div class="col-6 col-md-4"><dt>NIM</dt><dd id="bNim"></dd></div>
+            <div class="col-6 col-md-4"><dt>Program Studi</dt><dd id="bProdi"></dd></div>
+            <div class="col-12 col-md-4"><dt>Fakultas</dt><dd id="bFakultas"></dd></div>
+          </div>
+          <dt>Hobi</dt><dd id="bHobi"></dd>
+        </dl>
+      </div>
+      <form id="formBio" class="d-none" novalidate>
+        <div class="row g-3">
+          <div class="col-12 col-md-6"><label class="form-label" for="eNama">Nama</label><input id="eNama" class="form-control" autocomplete="off"></div>
+          <div class="col-12 col-md-6"><label class="form-label" for="eNim">NIM</label><input id="eNim" class="form-control" autocomplete="off"></div>
+          <div class="col-12 col-md-6"><label class="form-label" for="eProdi">Program Studi</label><input id="eProdi" class="form-control" autocomplete="off"></div>
+          <div class="col-12 col-md-6"><label class="form-label" for="eFakultas">Fakultas</label><input id="eFakultas" class="form-control" autocomplete="off"></div>
+          <div class="col-12"><label class="form-label" for="eHobi">Hobi (pisahkan dengan koma)</label><input id="eHobi" class="form-control" autocomplete="off"></div>
+        </div>
+        <div class="d-flex gap-2 mt-3">
+          <button class="btn btn-pb px-4" type="submit">Simpan</button>
+          <button id="btnBatal" class="btn btn-garis px-4" type="button">Batal</button>
+        </div>
+      </form>
+    </div></section>
+
+    <h2 class="h4 fw-bold mb-3">Kalkulator interaktif</h2>
+    <div class="row g-4 pb-5" id="daftar"></div>
+  </main>
+  <footer>Matematika Informatika &middot; TA 20261</footer>
+</section>
+
+<!-- ===== Halaman 1: Modulo ===== -->
+<section class="halaman d-none" data-halaman="modulo"><div class="hal">
+  <div class="judul-hal"><div class="lencana lg" aria-hidden="true">mod</div>
+    <div><h1 class="grad">Kalkulator Modulo</h1><p>Hitung sisa pembagian a mod b.</p></div></div>
+  <div class="card kartu"><div class="card-body p-4">
+    <form id="f1" novalidate>
+      <div class="row g-3 mb-3">
+        <div class="col-6"><label class="form-label" for="a1">Bilangan a</label><input id="a1" class="form-control" inputmode="numeric" value="17" autocomplete="off"></div>
+        <div class="col-6"><label class="form-label" for="b1">Modulus b</label><input id="b1" class="form-control" inputmode="numeric" value="5" autocomplete="off"></div>
+      </div>
+      <button class="btn btn-pb w-100 py-2" type="submit">Hitung</button>
+    </form>
+    <div id="err1" class="alert alert-danger mt-3 mb-0 d-none" role="alert"></div>
+    <div id="box1" class="hasil mt-4" aria-live="polite">
+      <div class="label-hasil">Hasil</div>
+      <div class="rumus" id="pers1"></div>
+      <div class="angka" id="hasil1"></div>
+      <div class="rinci mt-1" id="rinci1"></div>
+      <div class="jam-mod" id="jam1"></div>
+    </div>
+  </div></div>
+</div></section>
+
+<!-- ===== Halaman 2: Kongruensi ===== -->
+<section class="halaman d-none" data-halaman="kongruensi"><div class="hal">
+  <div class="judul-hal"><div class="lencana lg" aria-hidden="true">&equiv;</div>
+    <div><h1 class="grad">Cek Kongruensi</h1><p>Periksa apakah a &equiv; c (mod m).</p></div></div>
+  <div class="card kartu"><div class="card-body p-4">
+    <form id="f2" novalidate>
+      <div class="row g-3 mb-3">
+        <div class="col-4"><label class="form-label" for="a2">Bilangan a</label><input id="a2" class="form-control" inputmode="numeric" value="17" autocomplete="off"></div>
+        <div class="col-4"><label class="form-label" for="c2">Bilangan c</label><input id="c2" class="form-control" inputmode="numeric" value="22" autocomplete="off"></div>
+        <div class="col-4"><label class="form-label" for="m2">Modulus m</label><input id="m2" class="form-control" inputmode="numeric" value="5" autocomplete="off"></div>
+      </div>
+      <button class="btn btn-pb w-100 py-2" type="submit">Cek kongruensi</button>
+    </form>
+    <div id="err2" class="alert alert-danger mt-3 mb-0 d-none" role="alert"></div>
+    <div id="box2" class="hasil mt-4" aria-live="polite">
+      <div class="label-hasil">Hasil</div>
+      <div class="rumus" id="pers2"></div>
+      <div class="status" id="status2"></div>
+      <div class="rinci mt-1" id="rinci2"></div>
+      <div class="rinci mt-1" id="selisih2"></div>
+    </div>
+  </div></div>
+</div></section>
+
+<!-- ===== Halaman 3: Sistem Bilangan ===== -->
+<section class="halaman d-none" data-halaman="bilangan"><div class="hal">
+  <div class="judul-hal"><div class="lencana lg" aria-hidden="true">bin</div>
+    <div><h1 class="grad">Sistem Bilangan</h1><p>Ubah antara biner, oktal, desimal, dan heksadesimal.</p></div></div>
+  <div class="card kartu"><div class="card-body p-4">
+    <form id="f3" novalidate>
+      <div class="row g-3 mb-3">
+        <div class="col-7"><label class="form-label" for="nilai3">Bilangan</label><input id="nilai3" class="form-control" value="255" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+        <div class="col-5"><label class="form-label" for="dari3">Basis asal</label>
+          <select id="dari3" class="form-select"><option value="2">Biner (2)</option><option value="8">Oktal (8)</option><option value="10" selected>Desimal (10)</option><option value="16">Heksa (16)</option></select></div>
+      </div>
+      <button class="btn btn-pb w-100 py-2" type="submit">Konversi</button>
+    </form>
+    <div id="err3" class="alert alert-danger mt-3 mb-0 d-none" role="alert"></div>
+    <div id="box3" class="hasil mt-4" aria-live="polite">
+      <div class="label-hasil mb-1">Hasil konversi (ketuk baris untuk menyalin)</div>
+      <div id="baris3"></div>
+      <label class="form-label mt-3" for="ke3">Langkah pembagian ke basis</label>
+      <select id="ke3" class="form-select"><option value="2">Biner (2)</option><option value="8">Oktal (8)</option><option value="16">Heksa (16)</option></select>
+      <ol class="rinci mt-3 ps-3 mb-0" id="langkah3"></ol>
+    </div>
+  </div></div>
+</div></section>
+
+/* ---------- 4. Kombinasi ---------- */
+const fak = n => { let r = 1n; for (let i = 2n; i <= n; i++) r *= i; return r; };
+function hitungKomb(suara){
+  try {
+    const n = bil("n4", "n"), r = bil("r4", "r");
+    if (n < 0n || r < 0n) throw new Error("n dan r tidak boleh negatif.");
+    if (n > 500n) throw new Error("n maksimal 500 supaya perhitungan tetap cepat.");
+    if (r > n) throw new Error("r tidak boleh lebih besar dari n.");
+    let perm = 1n;
+    for (let i = n - r + 1n; i <= n; i++) perm *= i;
+    const komb = perm / fak(r);
+    galat(4);
+    $("pers4").textContent = "C(" + n + ", " + r + ")";
+    angka($("hasil4"), komb.toString());
+    $("rinci4").textContent = "C(" + n + "," + r + ") = " + n + "! / (" + r + "! \u00D7 " + (n - r) + "!)";
+    $("perm4").textContent = perm.toString();
+    $("fak4").textContent = fak(n).toString();
+    if (n <= 30n) $("sn").value = n;
+    if (r <= 30n) $("sr").value = r;
+    if (suara) bicara("Ada " + (komb.toString().length > 12 ? "banyak sekali" : komb) + " cara memilih " + r + " dari " + n + "!", "senang");
+  } catch (e) { galat(4, e.message); if (suara) bicara("Hmm, cek lagi n dan r-nya ya.", "sedih"); }
+}
+pasang("f4", hitungKomb);
+$("sn").addEventListener("input", () => {
+  $("n4").value = $("sn").value;
+  if (Number($("r4").value) > Number($("sn").value)){ $("r4").value = $("sn").value; $("sr").value = $("sn").value; }
+});
+$("sr").addEventListener("input", () => { $("r4").value = $("sr").value; });
+
+/* ---------- Pembuka interaktif ---------- */
+const SUB = "Perjalanan belajar Matematika Informatika bersama Pa Iin TA 20261";
+(function ketik(){
+  const el = $("ketik");
+  if (diam.matches){ el.textContent = SUB; el.classList.remove("jalan"); return; }
+  let i = 0;
+  const t = setInterval(() => {
+    el.textContent = SUB.slice(0, ++i);
+    if (i >= SUB.length){ clearInterval(t); el.classList.remove("jalan"); }
+  }, 38);
+})();
+
+const N = 5;
+let hit = 0;
+(function bangunJam(){
+  const svg = $("jam"), ns = "http://www.w3.org/2000/svg";
+  for (let k = 0; k < N; k++){
+    const a = (k / N) * 2 * Math.PI - Math.PI / 2;
+    const t = document.createElementNS(ns, "text");
+    t.setAttribute("x", (100 + 88 * Math.cos(a)).toFixed(1)); t.setAttribute("y", (100 + 88 * Math.sin(a)).toFixed(1));
+    t.id = "jk" + k; t.textContent = k; svg.appendChild(t);
+    const d = document.createElementNS(ns, "circle");
+    d.setAttribute("class", "titik");
+    d.setAttribute("cx", (100 + 68 * Math.cos(a)).toFixed(1)); d.setAttribute("cy", (100 + 68 * Math.sin(a)).toFixed(1)); d.setAttribute("r", 3);
+    svg.insertBefore(d, $("tangan"));
+  }
+})();
+function gambarJam(pesan){
+  $("tangan").style.transform = "rotate(" + (hit * (360 / N)) + "deg)";
+  for (let k = 0; k < N; k++) $("jk" + k).classList.toggle("aktif", k === hit % N);
+  $("hitungTeks").textContent = hit + " mod " + N + " = " + (hit % N);
+  $("pesanJam").textContent = pesan || "Tekan +1 dan lihat angkanya berputar.";
+}
+$("btnTambah").addEventListener("click", e => {
+  hit++;
+  const putaran = hit % N === 0;
+  gambarJam(putaran ? "Satu putaran penuh! Kembali ke 0." : "Sisa pembagian " + hit + " oleh " + N + " adalah " + (hit % N) + ".");
+  if (putaran){ const r = e.currentTarget.getBoundingClientRect(); bintang(r.left + r.width / 2, r.top, 14); }
+});
+$("btnUlang").addEventListener("click", () => { hit = 0; gambarJam(); });
+gambarJam();
+
+let sudahMasuk = false;
+function masuk(tenang){
+  if (sudahMasuk) return;
+  sudahMasuk = true;
+  const v = $("nama0").value.trim();
+  if (v){ bio.nama = v; simpanBio(); tampilBio(); }
+  const p = $("pembuka");
+  document.body.classList.remove("terkunci");
+  $("situs").removeAttribute("inert");
+  if (tenang || diam.matches) p.remove();
+  else { p.classList.add("keluar"); setTimeout(() => p.remove(), 900); }
+  siap = true;
+  const depan = bio.nama !== DEF.nama ? bio.nama.split(/\s+/)[0] : "";
+  if (!tenang) bicara(depan ? "Halo, " + depan + "! Selamat datang di Bukti Belajar." : "Halo! Aku Mimo. Klik aku, ya!", "senang");
+}
+$("formMasuk").addEventListener("submit", e => { e.preventDefault(); masuk(false); });
+$("btnLewati").addEventListener("click", () => masuk(false));
+
+/* ---------- Mulai ---------- */
+hitungModulo(false); cekKongruensi(false); konversi(false); hitungKomb(false);
+rute();
+if (location.hash.slice(1) in RUTE && location.hash.length > 1) masuk(true); // buka langsung ke kalkulator: lewati pembuka
+else $("nama0").focus({preventScroll: true});
+</script>
+</body>
+</html>
