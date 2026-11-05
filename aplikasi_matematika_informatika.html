@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matematika Informatika - Bukti Belajar TA 20261</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        rosy: {
+                            light: '#E8C5C8',
+                            DEFAULT: '#BC8F8F',
+                            dark: '#9E6B6B'
+                        },
+                        deepgreen: {
+                            light: '#2A6652',
+                            DEFAULT: '#1B4D3E',
+                            dark: '#0F3328'
+                        },
+                        midnight: {
+                            light: '#0A5F6D',
+                            DEFAULT: '#004953',
+                            dark: '#002F36'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0b1315;
+            color: #f1f5f9;
+            overflow-x: hidden;
+        }
+
+        /* Background Number Rain Canvas */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.25;
+        }
+
+        /* Sparkle Particle Canvas */
+        #sparkleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #002F36;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #BC8F8F;
+            border-radius: 4px;
+        }
+
+        /* Mascot animations */
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-mascot {
+            animation: bounce-slow 3s infinite ease-in-out;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 15px rgba(188, 143, 143, 0.4); }
+            50% { box-shadow: 0 0 25px rgba(27, 77, 62, 0.7); }
+        }
+        .glow-card {
+            animation: pulse-glow 4s infinite alternate;
+        }
+
+        .tab-btn.active {
+            background-color: #BC8F8F;
+            color: #002F36;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(188, 143, 143, 0.4);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col relative selection:bg-rosy selection:text-midnight-dark">
+
+    <!-- Canvas for Floating Random Numbers -->
+    <canvas id="bgCanvas"></canvas>
+    
+    <!-- Canvas for Star Sparkle Click Effect -->
+    <canvas id="sparkleCanvas"></canvas>
+
+    <!-- Main Container -->
+    <div class="relative z-10 flex flex-col min-h-screen">
+
+        <!-- Navigation Bar -->
+        <header class="sticky top-0 z-50 backdrop-blur-md bg-midnight-dark/80 border-b border-rosy/20 px-4 lg:px-8 py-3">
+            <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+                <!-- Logo / Title -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rosy to-deepgreen flex items-center justify-center text-midnight-dark font-extrabold text-xl shadow-lg">
+                        Math
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-lg text-rosy-light">Matematika Informatika</h1>
+                        <p class="text-xs text-slate-400">TA 20261 - Pa Lin</p>
+                    </div>
+                </div>
+
+                <!-- Tab Navigation Buttons -->
+                <nav class="flex items-center bg-midnight/60 p-1.5 rounded-2xl border border-rosy/20">
+                    <button onclick="switchTab('welcome')" id="tab-welcome" class="tab-btn active px-4 py-2 rounded-xl text-sm transition-all duration-300 flex items-center gap-2">
+                        <i data-lucide="smile"></i> Selamat Datang
+                    </button>
+                    <button onclick="switchTab('biodata')" id="tab-biodata" class="tab-btn px-4 py-2 rounded-xl text-sm transition-all duration-300 flex items-center gap-2">
+                        <i data-lucide="user"></i> Biodata
+                    </button>
+                    <button onclick="switchTab('bukti')" id="tab-bukti" class="tab-btn px-4 py-2 rounded-xl text-sm transition-all duration-300 flex items-center gap-2">
+                        <i data-lucide="calculator"></i> Bukti Belajar
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Dynamic Content Body -->
+        <main class="flex-grow max-w-6xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+
+            <!-- SECTION 1: WELCOME & MASCOT GREETING -->
+            <section id="section-welcome" class="block transition-all duration-500">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[70vh]">
+                    <!-- Text & Name Input -->
+                    <div class="lg:col-span-7 space-y-6 bg-midnight-dark/60 p-6 sm:p-8 rounded-3xl border border-rosy/20 backdrop-blur-md shadow-2xl">
+                        <div class="inline-block px-3 py-1 rounded-full bg-deepgreen/40 border border-rosy/30 text-rosy-light text-xs font-semibold uppercase tracking-wider">
+                            Interactive Math Learning
+                        </div>
+                        <h2 class="text-3xl sm:text-5xl font-extrabold text-white leading-tight">
+                            Selamat Datang di Portal <span class="text-transparent bg-clip-text bg-gradient-to-r from-rosy-light via-rosy to-deepgreen-light">Matematika Informatika</span>
+                        </h2>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                            Sebelum kita mulai mengeksplorasi modul perhitungan dan bukti belajar bersama **Pa Lin (TA 20261)**, mari saling bersapa terlebih dahulu! Masukkan nama Anda di bawah ini:
+                        </p>
+
+                        <form id="nameForm" onsubmit="handleNameSubmit(event)" class="space-y-4">
+                            <div class="flex flex-col sm:flex-row gap-3">
+                                <input type="text" id="inputUserName" required placeholder="Masukkan nama Anda..." 
+                                    class="flex-1 bg-midnight-dark border border-rosy/40 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-rosy focus:ring-2 focus:ring-rosy/30 transition-all">
+                                <button type="submit" class="bg-gradient-to-r from-deepgreen to-midnight-light hover:from-deepgreen-light hover:to-midnight text-white font-semibold px-6 py-3 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2">
+                                    <span>Sapa Mascot</span>
+                                    <i data-lucide="send" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </form>
+
+                        <div id="greetingOutput" class="hidden p-4 rounded-2xl bg-deepgreen/30 border border-deepgreen-light/50 text-rosy-light animate-fade-in">
+                            <p class="text-lg font-semibold flex items-center gap-2" id="greetingText">
+                                <!-- Dynamic Greeting -->
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Mascot Widget -->
+                    <div class="lg:col-span-5 flex flex-col items-center justify-center">
+                        <div class="relative group">
+                            <!-- Mascot Speech Bubble -->
+                            <div id="mascotBubble" class="absolute -top-16 left-1/2 -translate-x-1/2 bg-rosy text-midnight-dark font-bold px-4 py-2 rounded-2xl shadow-xl border-2 border-white text-xs sm:text-sm whitespace-nowrap transition-all duration-300 z-20 animate-bounce">
+                                Halo! Masukkan namamu ya! 👋
+                            </div>
+
+                            <!-- Mascot SVG Container -->
+                            <div class="w-64 h-64 sm:w-80 sm:h-80 relative flex items-center justify-center bg-gradient-to-b from-midnight to-midnight-dark rounded-full border-4 border-rosy/30 p-4 shadow-2xl animate-mascot">
+                                <svg id="mascotSvg" viewBox="0 0 200 200" class="w-full h-full drop-shadow-xl transition-transform duration-300">
+                                    <!-- Mascot Body -->
+                                    <circle cx="100" cy="115" r="65" fill="#1B4D3E" stroke="#BC8F8F" stroke-width="4"/>
+                                    <!-- Mascot Belly -->
+                                    <ellipse cx="100" cy="125" rx="45" ry="40" fill="#004953"/>
+                                    <!-- Mascot Ears/Horns -->
+                                    <polygon points="50,60 70,80 40,85" fill="#BC8F8F"/>
+                                    <polygon points="150,60 130,80 160,85" fill="#BC8F8F"/>
+                                    <!-- Eyes Container -->
+                                    <g id="mascotEyes">
+                                        <!-- Normal Eyes -->
+                                        <circle cx="80" cy="100" r="10" fill="#FFFFFF"/>
+                                        <circle cx="80" cy="100" r="5" fill="#002F36"/>
+                                        <circle cx="120" cy="100" r="10" fill="#FFFFFF"/>
+                                        <circle cx="120" cy="100" r="5" fill="#002F36"/>
+                                    </g>
+                                    <!-- Glasses (Math Vibe) -->
+                                    <rect x="65" y="90" width="30" height="20" rx="5" fill="none" stroke="#BC8F8F" stroke-width="3"/>
+                                    <rect x="105" y="90" width="30" height="20" rx="5" fill="none" stroke="#BC8F8F" stroke-width="3"/>
+                                    <line x1="95" y1="100" x2="105" y2="100" stroke="#BC8F8F" stroke-width="3"/>
+                                    <!-- Mouth -->
+                                    <path id="mascotMouth" d="M 85 125 Q 100 135 115 125" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+                                    <!-- Cheeks -->
+                                    <circle cx="70" cy="115" r="7" fill="#BC8F8F" opacity="0.6"/>
+                                    <circle cx="130" cy="115" r="7" fill="#BC8F8F" opacity="0.6"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: BIODATA -->
+            <section id="section-biodata" class="hidden transition-all duration-500">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl font-extrabold text-rosy-light">Biodata Mahasiswa</h2>
+                        <p class="text-slate-400 text-sm">Kelola profil dan informasi singkat Anda di sini.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+                        <!-- Profile Card Preview -->
+                        <div class="md:col-span-5 bg-midnight-dark/80 border border-rosy/30 rounded-3xl p-6 text-center flex flex-col items-center justify-between glow-card">
+                            <div class="w-full flex flex-col items-center">
+                                <div class="relative w-32 h-32 mb-4 group">
+                                    <img id="profileImage" src="https://placehold.co/150x150/004953/BC8F8F?text=Foto+Profil" alt="Foto Profil" class="w-full h-full object-cover rounded-full border-4 border-rosy shadow-lg">
+                                    <label for="uploadPhoto" class="absolute bottom-0 right-0 bg-deepgreen p-2 rounded-full cursor-pointer hover:bg-deepgreen-light text-white shadow-md transition-all">
+                                        <i data-lucide="camera" class="w-4 h-4"></i>
+                                    </label>
+                                    <input type="file" id="uploadPhoto" accept="image/*" class="hidden" onchange="handlePhotoUpload(event)">
+                                </div>
+                                <h3 id="cardName" class="text-xl font-bold text-white">Nama Mahasiswa</h3>
+                                <p id="cardNPM" class="text-xs text-rosy font-semibold mt-1">NPM: 2026100123</p>
+                                <div class="w-full border-t border-rosy/20 my-4"></div>
+                                <div class="w-full text-left space-y-2 text-xs sm:text-sm">
+                                    <div><span class="text-slate-400">Kelas:</span> <span id="cardClass" class="text-slate-200 font-medium">IF-2026</span></div>
+                                    <div><span class="text-slate-400">Dosen TA:</span> <span class="text-slate-200 font-medium">Pa Lin</span></div>
+                                    <div><span class="text-slate-400">Bio Singkat:</span></div>
+                                    <p id="cardBio" class="text-slate-300 italic bg-midnight/50 p-2.5 rounded-xl border border-rosy/10 text-xs">
+                                        "Semangat mempelajari Logika Matematika dan Struktur Diskrit!"
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="mt-6 w-full">
+                                <span class="inline-block w-full py-2 bg-deepgreen/40 border border-deepgreen text-rosy-light text-xs rounded-xl font-medium">
+                                    Status: Aktif TA 20261
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Biodata Input Form -->
+                        <div class="md:col-span-7 bg-midnight-dark/60 border border-rosy/20 rounded-3xl p-6 sm:p-8 backdrop-blur-md">
+                            <h3 class="text-lg font-bold text-rosy-light mb-4 flex items-center gap-2">
+                                <i data-lucide="edit-3" class="w-5 h-5"></i> Edit Biodata Singkat
+                            </h3>
+                            <form onsubmit="event.preventDefault();" class="space-y-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-300 mb-1">Nama Lengkap</label>
+                                    <input type="text" id="inputName" value="Nama Mahasiswa" oninput="updateBioCard()" 
+                                        class="w-full bg-midnight border border-rosy/30 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-rosy">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-300 mb-1">NPM / NIM</label>
+                                    <input type="text" id="inputNPM" value="2026100123" oninput="updateBioCard()" 
+                                        class="w-full bg-midnight border border-rosy/30 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-rosy">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-300 mb-1">Kelas / Jurusan</label>
+                                    <input type="text" id="inputClass" value="Informatika - IF 20261" oninput="updateBioCard()" 
+                                        class="w-full bg-midnight border border-rosy/30 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-rosy">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-300 mb-1">Bio Singkat</label>
+                                    <textarea id="inputBio" rows="3" oninput="updateBioCard()" 
+                                        class="w-full bg-midnight border border-rosy/30 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-rosy resize-none">Semangat mempelajari Logika Matematika dan Struktur Diskrit!</textarea>
+                                </div>
+                                <div class="pt-2">
+                                    <button type="button" onclick="showSavedNotification()" class="w-full bg-rosy hover:bg-rosy-dark text-midnight-dark font-bold py-2.5 rounded-xl transition-all shadow-md">
+                                        Simpan Perubahan
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 3: BUKTI BELAJAR -->
+            <section id="section-bukti" class="hidden transition-all duration-500">
+                <!-- Banner Header -->
+                <div class="text-center mb-10 bg-gradient-to-r from-midnight via-deepgreen/80 to-midnight p-8 rounded-3xl border border-rosy/30 shadow-2xl relative overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-rosy/10 rounded-full blur-2xl"></div>
+                    <h2 class="text-4xl sm:text-5xl font-black text-white tracking-wide uppercase mb-3">
+                        BUKTI BELAJAR
+                    </h2>
+                    <p class="text-rosy-light text-base sm:text-lg font-medium max-w-2xl mx-auto">
+                        Perjalanan belajar matematika informatika bersama pa lin TA 20261
+                    </p>
+                </div>
+
+                <!-- Calculators Sub-Navigation Bar -->
+                <div class="flex flex-wrap items-center justify-center gap-2 mb-8 bg-midnight-dark/80 p-2 rounded-2xl border border-rosy/20">
+                    <button onclick="switchCalc('modulo')" id="calcTab-modulo" class="calc-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-rosy text-midnight-dark shadow-md">
+                        Modulo
+                    </button>
+                    <button onclick="switchCalc('congruence')" id="calcTab-congruence" class="calc-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all text-slate-300 hover:text-white">
+                        Kongruensi
+                    </button>
+                    <button onclick="switchCalc('base')" id="calcTab-base" class="calc-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all text-slate-300 hover:text-white">
+                        Sistem Bilangan
+                    </button>
+                    <button onclick="switchCalc('combination')" id="calcTab-combination" class="calc-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all text-slate-300 hover:text-white">
+                        Permutasi & Kombinasi
+                    </button>
+                </div>
+
+                <!-- CALCULATOR PANELS -->
+                <div class="bg-midnight-dark/70 border border-rosy/30 rounded-3xl p-6 sm:p-8 backdrop-blur-md shadow-2xl">
+
+                    <!-- 1. MODULO CALCULATOR -->
+                    <div id="calc-modulo" class="calc-panel space-y-6">
+                        <div class="border-b border-rosy/20 pb-4">
+                            <h3 class="text-xl font-bold text-rosy-light flex items-center gap-2">
+                                <i data-lucide="percent" class="w-5 h-5"></i> Kalkulator Modulo
+                            </h3>
+                            <p class="text-xs text-slate-400">Menghitung sisa hasil bagi $a \pmod n$</p>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs text-slate-300 mb-1">Angka ($a$)</label>
+                                <input type="number" id="modA" value="27" class="w-full bg-midnight border border-rosy/30 rounded-xl px-4 py-2.5 text-white">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-300 mb-1">Modulus ($n$)</label>
+                                <input type="number" id="modN" value="5" class="w-full bg-midnight border border-rosy/30 rounded-xl px-4 py-2.5 text-white">
+                            </div>
+                        </div>
+                        <button onclick="calculateModulo()" class="w-full bg-deepgreen hover:bg-deepgreen-light text-white font-bold py-3 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2">
+                            <i data-lucide="calculator" class="w-4 h-4"></i> Hitung Modulo
+                        </button>
+
+                        <div id="resultModulo" class="hidden p-5 rounded-2xl bg-midnight border border-rosy/30 space-y-2">
+                            <!-- Output -->
+                        </div>
+                    </div>
+
+                    <!-- 2. CONGRUENCE CALCULATOR -->
+                    <div id="calc-congruence" class="calc-panel hidden space-y-6">
+                        <div class="border-b border-rosy/20 pb-4">
+                            <h3 class="text-xl font-bold text-rosy-light flex items-center gap-2">
+                                <i data-lucide="git-commit" class="w-5 h-5"></i> Kalkulator Kongruensi Modulo
+                            </h3>
+                            <p class="text-xs text-slate-400">Mengecek apakah $a \equiv b \pmod m$</p>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-xs text-slate-300 mb-1">Nilai $a$</label>
+                                <input type="number" id="congA" value="38" class="w-full bg-midnight border border-rosy/30 rounded-xl px-4 py-2.5 text-white">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-300 mb-1">Nilai $b$</label>
+                                <input type="number" id="congB" value="14" class="w-full bg-midnight border border-rosy/30 rounded-xl px-4 py-2.5 text-white">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-300 mb-1">Modulus ($m$)</label>
+                                <input type="number" id="congM" value="12" class="w-full bg-midnight border border-rosy/30 rounded-xl px-4 py-2.5 text-white">
+                            </div>
+                        </div>
+                        <button onclick="calculateCongruence()" class="w-full bg-deepgreen hover:bg-deepgreen-light text-white font-bold py-3 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4"></i> Cek Kongruensi
+                        </button>
+
+                        <div id="resultCongruence" class="hidden p-5 rounded-2xl bg-midnight border border-rosy/30 space-y-2">
+                            <!-- Output -->
+                        </div>
+                    </div>
+
+                    <!-- 3. NUMBER BASE SYSTEM CALCULATOR -->
+                    <div id="calc-base" class="calc-panel hidden space-y-6">
+                        <div class="border-b border-rosy/20 pb-4">
+                            <h3 class="text-xl font-bold text-rosy-light flex items-center gap-2">
+                                <i data-lucide="binary" class="w-5 h-5"></i> Kalkulator Sistem Bilangan
+                            </h3>
+                            <p class="text-xs text-slate-400">Konversi otomatis antara Biner, Oktal, Desimal, dan Heksadesimal</p>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div class="sm:col-span-2">
+                                <label class="block text-xs text-slate-300 mb-1">Masukkan Nilai</label>
+                                <input type="text" id="baseInput" value="255" class="w-full bg-midnight border border-rosy/30 rounded-xl px-4 py-2.5 text-white uppercase">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-300 mb-1">Basis Asal</label>
+                                <select id="baseFrom" class="w-full bg-midnight border border-rosy/30 rounded-xl px-4 py-2.5 text-white">
+                                    <option value="10">Desimal (Base 10)</option>
+                                    <option value="2">Biner (Base 2)</option>
+                                    <option value="8">Oktal (Base 8)</option>
+                                    <option value="16">Heksadesimal (Base 16)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button onclick="calculateBase()" class="w-full bg-deepgreen hover:bg-deepgreen-light text-white font-bold py-3 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2">
+                            <i data-lucide="refresh-cw" class="w-4 h-4"></i> Konversi Sistem Bilangan
+                        </button>
+
+                        <div id="resultBase" class="hidden p-5 rounded-2xl bg-midnight border border-rosy/30 space-y-3">
+                            <!-- Output -->
+                        </div>
+                    </div>
+
+                    <!-- 4. COMBINATION & PERMUTATION CALCULATOR -->
+                    <div id="calc-combination" class="calc-panel hidden space-y-6">
+                        <div class="border-b border-rosy/20 pb-4">
+                            <h3 class="text-xl font-bold text-rosy-light flex items-center gap-2">
+                                <i data-lucide="layers" class="w-5 h-5"></i> Kalkulator Permutasi & Kombinasi
+                            </h3>
+                            <p class="text-xs text-slate-400">Ketentuan Validasi: $0 \le r \le n$</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs text-slate-300 mb-1">Jumlah Total Elemen ($n$)</label>
+                                <input type="number" id="combN" value="5" min="0" class="w-full bg-midnight border border-rosy/30 rounded-xl px-4 py-2.5 text-white">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-300 mb-1">Jumlah Elemen Dipilih ($r$)</label>
+                                <input type="number" id="combR" value="3" min="0" class="w-full bg-midnight border border-rosy/30 rounded-xl px-4 py-2.5 text-white">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <button onclick="calculateCombPerm('permutation')" class="bg-deepgreen hover:bg-deepgreen-light text-white font-bold py-3 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2">
+                                Hitung Permutasi $P(n,r)$
+                            </button>
+                            <button onclick="calculateCombPerm('combination')" class="bg-rosy hover:bg-rosy-dark text-midnight-dark font-bold py-3 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2">
+                                Hitung Kombinasi $C(n,r)$
+                            </button>
+                        </div>
+
+                        <div id="resultComb" class="hidden p-5 rounded-2xl bg-midnight border border-rosy/30 space-y-3">
+                            <!-- Output -->
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="border-t border-rosy/20 py-6 text-center text-xs text-slate-400 bg-midnight-dark/90">
+            <p>Portal Pembelajaran Matematika Informatika TA 20261 &bull; Pa Lin</p>
+            <p class="text-slate-500 mt-1">Dibuat dengan tema Rosy Brown, Deep Green & Midnight Green</p>
+        </footer>
+
+    </div>
+
+    <!-- Toast Notification for Actions -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-rosy text-midnight-dark font-bold px-5 py-3 rounded-2xl shadow-2xl border-2 border-white transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-2">
+        <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+        <span id="toastMsg">Notifikasi</span>
+    </div>
+
+    <script>
+        // --- 1. GLOBAL STATE & NAVIGATION ---
+        let userName = "";
+
+        function switchTab(tabId) {
+            // Update Tab Active UI
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`tab-${tabId}`).classList.add('active');
+
+            // Hide/Show Sections
+            ['welcome', 'biodata', 'bukti'].forEach(id => {
+                const sec = document.getElementById(`section-${id}`);
+                if (id === tabId) {
+                    sec.classList.remove('hidden');
+                } else {
+                    sec.classList.add('hidden');
+                }
+            });
+        }
+
+        function switchCalc(calcId) {
+            // Update Calc Subtabs
+            document.querySelectorAll('.calc-tab-btn').forEach(btn => {
+                btn.classList.remove('bg-rosy', 'text-midnight-dark', 'shadow-md');
+                btn.classList.add('text-slate-300');
+            });
+            const activeTab = document.getElementById(`calcTab-${calcId}`);
+            activeTab.classList.add('bg-rosy', 'text-midnight-dark', 'shadow-md');
+            activeTab.classList.remove('text-slate-300');
+
+            // Switch Panels
+            document.querySelectorAll('.calc-panel').forEach(panel => panel.classList.add('hidden'));
+            document.getElementById(`calc-${calcId}`).classList.remove('hidden');
+        }
+
+        // --- 2. WELCOME & MASCOT LOGIC ---
+        function handleNameSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('inputUserName');
+            if (!input.value.trim()) return;
+
+            userName = input.value.trim();
+            
+            // Sync to Biodata
+            document.getElementById('inputName').value = userName;
+            updateBioCard();
+
+            // Display Greeting
+            const output = document.getElementById('greetingOutput');
+            const text = document.getElementById('greetingText');
+            text.innerHTML = `<i data-lucide="sparkles" class="w-5 h-5 text-rosy"></i> Halo, <span class="text-white font-bold underline decoration-rosy">${userName}</span>! Selamat datang di portal Bukti Belajar Matematika Informatika TA 20261 bersama Pa Lin!`;
+            output.classList.remove('hidden');
+
+            // Mascot Reaction
+            triggerMascotHappy(`Senang bertemu denganmu, ${userName}! ✨`);
+            lucide.createIcons();
+            showToast(`Halo, ${userName}!`);
+        }
+
+        function triggerMascotHappy(message) {
+            const bubble = document.getElementById('mascotBubble');
+            const mouth = document.getElementById('mascotMouth');
+            
+            bubble.innerText = message;
+            // Smile curve
+            mouth.setAttribute('d', 'M 80 120 Q 100 145 120 120');
+
+            // Burst stars around mascot
+            const mascotRect = document.getElementById('mascotSvg').getBoundingClientRect();
+            createStarBurst(mascotRect.left + mascotRect.width/2, mascotRect.top + mascotRect.height/2);
+
+            setTimeout(() => {
+                // Reset mouth after 4 sec
+                mouth.setAttribute('d', 'M 85 125 Q 100 135 115 125');
+            }, 4000);
+        }
+
+        // --- 3. BIODATA CARD LOGIC ---
+        function updateBioCard() {
+            document.getElementById('cardName').innerText = document.getElementById('inputName').value || "Nama Mahasiswa";
+            document.getElementById('cardNPM').innerText = "NPM: " + (document.getElementById('inputNPM').value || "-");
+            document.getElementById('cardClass').innerText = document.getElementById('inputClass').value || "-";
+            document.getElementById('cardBio').innerText = `"${document.getElementById('inputBio').value || "-"}"`;
+        }
+
+        function handlePhotoUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profileImage').src = e.target.result;
+                    showToast("Foto profil berhasil diperbarui!");
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function showSavedNotification() {
+            showToast("Biodata berhasil disimpan!");
+            triggerMascotHappy("Data profilmu sudah rapi!");
+        }
+
+        // --- 4. CALCULATORS LOGIC ---
+
+        // A. Modulo Calculator
+        function calculateModulo() {
+            const a = parseInt(document.getElementById('modA').value);
+            const n = parseInt(document.getElementById('modN').value);
+            const resDiv = document.getElementById('resultModulo');
+
+            if (isNaN(a) || isNaN(n) || n === 0) {
+                resDiv.innerHTML = `<p class="text-red-400 text-sm">Error: Masukkan angka yang valid dan Modulus (n) tidak boleh 0.</p>`;
+                resDiv.classList.remove('hidden');
+                return;
+            }
+
+            // Math: r = a - n * floor(a / n)
+            let result = a % n;
+            if (result < 0) result += Math.abs(n); // Handle negative modulo
+
+            const q = Math.floor(a / n);
+
+            resDiv.innerHTML = `
+                <div class="text-xs text-rosy font-semibold uppercase tracking-wider">Hasil Perhitungan</div>
+                <div class="text-2xl font-bold text-white">${a} mod ${n} = <span class="text-rosy-light">${result}</span></div>
+                <div class="border-t border-rosy/10 my-2"></div>
+                <div class="text-xs text-slate-300 space-y-1">
+                    <p><strong>Rumus:</strong> $a = n \\times q + r$ dengan $0 \\le r < n$</p>
+                    <p><strong>Proses Breakdown:</strong> ${a} = ${n} &times; (${q}) + ${result}</p>
+                </div>
+            `;
+            resDiv.classList.remove('hidden');
+            triggerMascotHappy(`Selesai! ${a} mod ${n} adalah ${result}`);
+        }
+
+        // B. Congruence Calculator
+        function calculateCongruence() {
+            const a = parseInt(document.getElementById('congA').value);
+            const b = parseInt(document.getElementById('congB').value);
+            const m = parseInt(document.getElementById('congM').value);
+            const resDiv = document.getElementById('resultCongruence');
+
+            if (isNaN(a) || isNaN(b) || isNaN(m) || m <= 0) {
+                resDiv.innerHTML = `<p class="text-red-400 text-sm">Error: Modulus (m) harus berupa bilangan positif > 0.</p>`;
+                resDiv.classList.remove('hidden');
+                return;
+            }
+
+            const diff = a - b;
+            const isCongruent = (diff % m === 0);
+
+            resDiv.innerHTML = `
+                <div class="text-xs text-rosy font-semibold uppercase tracking-wider">Hasil Evaluasi Kongruensi</div>
+                <div class="text-xl font-bold ${isCongruent ? 'text-green-400' : 'text-red-400'}">
+                    ${a} &#8801; ${b} (mod ${m}) &rarr; ${isCongruent ? 'BENAR (Kongruen)' : 'SALAH (Tidak Kongruen)'}
+                </div>
+                <div class="border-t border-rosy/10 my-2"></div>
+                <div class="text-xs text-slate-300 space-y-1">
+                    <p><strong>Syarat Kongruensi:</strong> $m$ harus membagi habis $(a - b)$, ditulis $m \\mid (a - b)$.</p>
+                    <p><strong>Perhitungan:</strong> $a - b = ${a} - ${b} = ${diff}$</p>
+                    <p><strong>Pengujian:</strong> ${diff} / ${m} = ${diff / m} ${isCongruent ? '(Bilangan Bulat)' : '(Bukan Bilangan Bulat)'}</p>
+                </div>
+            `;
+            resDiv.classList.remove('hidden');
+            triggerMascotHappy(isCongruent ? "Sip, nilainya Kongruen!" : "Ternyata Tidak Kongruen!");
+        }
+
+        // C. Base System Calculator
+        function calculateBase() {
+            const inputVal = document.getElementById('baseInput').value.trim();
+            const fromBase = parseInt(document.getElementById('baseFrom').value);
+            const resDiv = document.getElementById('resultBase');
+
+            const decVal = parseInt(inputVal, fromBase);
+
+            if (isNaN(decVal)) {
+                resDiv.innerHTML = `<p class="text-red-400 text-sm">Error: Input '${inputVal}' tidak valid untuk basis ${fromBase}.</p>`;
+                resDiv.classList.remove('hidden');
+                return;
+            }
+
+            const bin = decVal.toString(2);
+            const oct = decVal.toString(8);
+            const dec = decVal.toString(10);
+            const hex = decVal.toString(16).toUpperCase();
+
+            resDiv.innerHTML = `
+                <div class="text-xs text-rosy font-semibold uppercase tracking-wider">Hasil Konversi Basis</div>
+                <div class="grid grid-cols-2 gap-3 text-sm">
+                    <div class="bg-midnight/80 p-2.5 rounded-xl border border-rosy/20">
+                        <span class="text-xs text-slate-400 block">Biner (Base 2):</span>
+                        <span class="font-mono font-bold text-rosy-light">${bin}</span>
+                    </div>
+                    <div class="bg-midnight/80 p-2.5 rounded-xl border border-rosy/20">
+                        <span class="text-xs text-slate-400 block">Oktal (Base 8):</span>
+                        <span class="font-mono font-bold text-rosy-light">${oct}</span>
+                    </div>
+                    <div class="bg-midnight/80 p-2.5 rounded-xl border border-rosy/20">
+                        <span class="text-xs text-slate-400 block">Desimal (Base 10):</span>
+                        <span class="font-mono font-bold text-rosy-light">${dec}</span>
+                    </div>
+                    <div class="bg-midnight/80 p-2.5 rounded-xl border border-rosy/20">
+                        <span class="text-xs text-slate-400 block">Heksadesimal (Base 16):</span>
+                        <span class="font-mono font-bold text-rosy-light">${hex}</span>
+                    </div>
+                </div>
+            `;
+            resDiv.classList.remove('hidden');
+            triggerMascotHappy(`Berhasil mengonversi basis bilangan!`);
+        }
+
+        // D. Permutation & Combination Calculator
+        function factorial(num) {
+            if (num < 0) return -1;
+            if (num === 0 || num === 1) return 1n;
+            let result = 1n;
+            for (let i = 2n; i <= BigInt(num); i++) {
+                result *= i;
+            }
+            return result;
+        }
+
+        function calculateCombPerm(type) {
+            const n = parseInt(document.getElementById('combN').value);
+            const r = parseInt(document.getElementById('combR').value);
+            const resDiv = document.getElementById('resultComb');
+
+            // Validation 0 <= r <= n
+            if (isNaN(n) || isNaN(r) || r < 0 || n < 0 || r > n) {
+                resDiv.innerHTML = `
+                    <div class="p-3 bg-red-900/30 border border-red-500/50 rounded-xl text-red-300 text-xs sm:text-sm">
+                        <strong>Validasi Gagal!</strong> Pastikan ketentuan $0 \\le r \\le n$ terpenuhi (Nilai r tidak boleh lebih besar dari n, dan tidak boleh negatif).
+                    </div>
+                `;
+                resDiv.classList.remove('hidden');
+                return;
+            }
+
+            const factN = factorial(n);
+            const factR = factorial(r);
+            const factNminusR = factorial(n - r);
+
+            if (type === 'permutation') {
+                // P(n,r) = n! / (n-r)!
+                const permResult = factN / factNminusR;
+
+                resDiv.innerHTML = `
+                    <div class="text-xs text-rosy font-semibold uppercase tracking-wider">Hasil Perhitungan Permutasi</div>
+                    <div class="text-2xl font-bold text-white">P(${n}, ${r}) = <span class="text-rosy-light">${permResult.toString()}</span></div>
+                    <div class="border-t border-rosy/10 my-2"></div>
+                    <div class="text-xs text-slate-300 space-y-1">
+                        <p><strong>Rumus Permutasi:</strong> $P(n,r) = \\frac{n!}{(n-r)!}$</p>
+                        <p><strong>Proses:</strong> $\\frac{${n}!}{(${n}-${r})!} = \\frac{${factN.toString()}}{${factNminusR.toString()}}$</p>
+                    </div>
+                `;
+            } else {
+                // C(n,r) = n! / (r! * (n-r)!)
+                const combResult = factN / (factR * factNminusR);
+
+                resDiv.innerHTML = `
+                    <div class="text-xs text-rosy font-semibold uppercase tracking-wider">Hasil Perhitungan Kombinasi</div>
+                    <div class="text-2xl font-bold text-white">C(${n}, ${r}) = <span class="text-rosy-light">${combResult.toString()}</span></div>
+                    <div class="border-t border-rosy/10 my-2"></div>
+                    <div class="text-xs text-slate-300 space-y-1">
+                        <p><strong>Rumus Kombinasi:</strong> $C(n,r) = \\frac{n!}{r! \\times (n-r)!}$</p>
+                        <p><strong>Proses:</strong> $\\frac{${n}!}{${r}! \\times ${n-r}!} = \\frac{${factN.toString()}}{${factR.toString()} \\times ${factNminusR.toString()}}$</p>
+                    </div>
+                `;
+            }
+
+            resDiv.classList.remove('hidden');
+            triggerMascotHappy(`Hebat! ${type === 'permutation' ? 'Permutasi' : 'Kombinasi'} berhasil dihitung!`);
+        }
+
+        // --- 5. TOAST NOTIFICATION ---
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // --- 6. BACKGROUND FLOATING NUMBERS ANIMATION ---
+        const bgCanvas = document.getElementById('bgCanvas');
+        const bgCtx = bgCanvas.getContext('2d');
+        let bgWidth, bgHeight;
+        let numbers = [];
+
+        function resizeBgCanvas() {
+            bgWidth = bgCanvas.width = window.innerWidth;
+            bgHeight = bgCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeBgCanvas);
+        resizeBgCanvas();
+
+        class FloatingNumber {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * bgWidth;
+                this.y = Math.random() * bgHeight;
+                this.value = Math.floor(Math.random() * 10).toString();
+                this.fontSize = Math.random() * 16 + 12;
+                this.speedY = -(Math.random() * 0.8 + 0.2);
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.y += this.speedY;
+                if (this.y < -20) {
+                    this.y = bgHeight + 20;
+                    this.x = Math.random() * bgWidth;
+                }
+            }
+            draw() {
+                bgCtx.fillStyle = `rgba(188, 143, 143, ${this.opacity})`;
+                bgCtx.font = `${this.fontSize}px monospace`;
+                bgCtx.fillText(this.value, this.x, this.y);
+            }
+        }
+
+        for (let i = 0; i < 70; i++) {
+            numbers.push(new FloatingNumber());
+        }
+
+        function animateBg() {
+            bgCtx.clearRect(0, 0, bgWidth, bgHeight);
+            numbers.forEach(num => {
+                num.update();
+                num.draw();
+            });
+            requestAnimationFrame(animateBg);
+        }
+        animateBg();
+
+        // --- 7. CLICK STARBURST SPARKLE EFFECT ---
+        const sparkleCanvas = document.getElementById('sparkleCanvas');
+        const sparkleCtx = sparkleCanvas.getContext('2d');
+        let particles = [];
+
+        function resizeSparkleCanvas() {
+            sparkleCanvas.width = window.innerWidth;
+            sparkleCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeSparkleCanvas);
+        resizeSparkleCanvas();
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 6 + 2;
+                this.speedX = (Math.random() - 0.5) * 8;
+                this.speedY = (Math.random() - 0.5) * 8;
+                this.color = ['#BC8F8F', '#E8C5C8', '#1B4D3E', '#FFFFFF', '#0A5F6D'][Math.floor(Math.random() * 5)];
+                this.life = 1;
+                this.decay = Math.random() * 0.03 + 0.02;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.life -= this.decay;
+            }
+            draw() {
+                sparkleCtx.save();
+                sparkleCtx.globalAlpha = Math.max(this.life, 0);
+                sparkleCtx.fillStyle = this.color;
+                // Draw star shape
+                sparkleCtx.beginPath();
+                for (let i = 0; i < 5; i++) {
+                    sparkleCtx.lineTo(
+                        this.x + this.size * Math.cos((18 + i * 72) * Math.PI / 180),
+                        this.y + this.size * Math.sin((18 + i * 72) * Math.PI / 180)
+                    );
+                    sparkleCtx.lineTo(
+                        this.x + (this.size / 2) * Math.cos((54 + i * 72) * Math.PI / 180),
+                        this.y + (this.size / 2) * Math.sin((54 + i * 72) * Math.PI / 180)
+                    );
+                }
+                sparkleCtx.closePath();
+                sparkleCtx.fill();
+                sparkleCtx.restore();
+            }
+        }
+
+        function createStarBurst(x, y) {
+            for (let i = 0; i < 15; i++) {
+                particles.push(new Particle(x, y));
+            }
+        }
+
+        window.addEventListener('click', (e) => {
+            createStarBurst(e.clientX, e.clientY);
+        });
+
+        function animateSparkles() {
+            sparkleCtx.clearRect(0, 0, sparkleCanvas.width, sparkleCanvas.height);
+            for (let i = particles.length - 1; i >= 0; i--) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].life <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+            requestAnimationFrame(animateSparkles);
+        }
+        animateSparkles();
+
+        // Initialize Lucide Icons on Load
+        window.onload = function() {
+            lucide.createIcons();
+        };
+    </script>
+</body>
+</html>
